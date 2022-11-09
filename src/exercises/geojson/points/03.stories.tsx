@@ -1,16 +1,4 @@
-import { useMemo, useState } from 'react';
-
-import uniq from 'lodash/uniq';
-
 import { Story } from '@storybook/react/types-6-0';
-import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
-import { Layer, LayerManager } from '@vizzuality/layer-manager-react';
-
-import Map from 'components/map';
-import Controls from 'components/map/controls';
-import ZoomControl from 'components/map/controls/zoom';
-import { CustomMapProps } from 'components/map/types';
-import AIRPORTS_DATA from 'data/airports.json';
 
 const StoryMap = {
   title: 'Exercises/Geojson/Points',
@@ -19,108 +7,18 @@ const StoryMap = {
 
 export default StoryMap;
 
-const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
-  const { id, bounds, initialViewState } = args;
-
-  const [viewState, setViewState] = useState(initialViewState);
-
-  const colors = [
-    '#e65154',
-    '#26b6ff',
-    '#67e6d1',
-    '#cd76d6',
-    '#ffca8c',
-    '#fff2b3',
-    '#ff8cd9',
-    '#c8f2a9',
-    '#d4b8ff',
-  ];
-
-  const aiportTypes = useMemo(() => uniq(AIRPORTS_DATA.features.map((f) => f.properties.type)), []);
-
-  const typeAirportsRamp = useMemo(
-    () => aiportTypes.map((a, i) => Object.entries({ [a]: colors[i] })).flat(2),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [aiportTypes]
-  );
-
-  const AIRPORTS_LAYER = {
-    id: 'airports',
-    type: 'geojson',
-    source: {
-      type: 'geojson',
-      data: AIRPORTS_DATA,
-    },
-    render: {
-      layers: [
-        {
-          type: 'circle',
-          paint: {
-            'circle-color': ['match', ['get', 'type'], ...typeAirportsRamp, '#DDD'],
-            'circle-opacity': 0.5,
-            'circle-radius': 5,
-            'circle-stroke-color': ['match', ['get', 'type'], ...typeAirportsRamp, '#DDD'],
-            'circle-stroke-width': 1,
-          },
-        },
-      ],
-    },
-  };
+const Template: Story = () => {
   return (
     <div className="relative w-full h-screen">
-      <div className="prose dark:prose-invert">
-        Draw a geojson point collection, fill it with a color ramp base on an string attribute,
-        center the map on it and display them with following styles:
-        <ul>
-          <li>color: base on an attribute category [...COLOR_RAMP]</li>
-          <li>border: #000000</li>
-          <li>opacity: 0.5</li>
-        </ul>
-      </div>
-      <Map
-        id={id}
-        bounds={bounds}
-        viewState={viewState}
-        mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
-        onMapViewStateChange={(v) => {
-          setViewState(v);
-        }}
-      >
-        {(map) => {
-          return (
-            <>
-              <LayerManager map={map} plugin={PluginMapboxGl}>
-                <Layer key={AIRPORTS_LAYER.id} {...AIRPORTS_LAYER} />
-              </LayerManager>
-              <Controls>
-                <ZoomControl id={id} />
-              </Controls>
-            </>
-          );
-        }}
-      </Map>
+      Draw a geojson points collection, center the map on it and color it with this
+      <ul>
+        <li>color: base on an attribute category [...COLOR_RAMP]</li>
+        <li>border: #000000</li>
+        <li>opacity: 0.5</li>
+      </ul>
     </div>
   );
 };
 
 export const Points03 = Template.bind({});
-Points03.args = {
-  id: 'airports-map',
-  className: '',
-  viewport: {},
-  initialViewState: {},
-  bounds: {
-    bbox: [-154.335938, -63.548552, 154.335938, 63.548552],
-    options: { padding: 50 },
-    viewportOptions: { transitionDuration: 0 },
-  },
-  onMapViewportChange: (viewport) => {
-    console.info('onMapViewportChange: ', viewport);
-  },
-  onMapReady: ({ map, mapContainer }) => {
-    console.info('onMapReady: ', map, mapContainer);
-  },
-  onMapLoad: ({ map, mapContainer }) => {
-    console.info('onMapLoad: ', map, mapContainer);
-  },
-};
+Points03.args = {};
