@@ -26,13 +26,8 @@ const StoryMap = {
 export default StoryMap;
 
 const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
-  const { id, initialViewState } = args;
-  const [bounds] = useState({
-    bbox: [29.882812499999986, -2.1088986592431382, 30.5859375, -1.7575368113082999],
-    options: {
-      duration: 0,
-    },
-  });
+  const { id, bounds, initialViewState } = args;
+
   const [viewState, setViewState] = useState(initialViewState);
 
   const [biiOpacity, setBiiOpacity] = useState(1);
@@ -280,7 +275,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
       <Map
         id={id}
-        // bounds={bounds}
+        bounds={bounds}
         initialViewState={initialViewState}
         viewState={viewState}
         mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
@@ -288,72 +283,74 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
           setViewState(v);
         }}
       >
-        {(map) => (
-          <>
-            <LayerManager
-              map={map}
-              plugin={PluginMapboxGl}
-              providers={{
-                [cartoProvider.name]: cartoProvider.handleData,
-              }}
-            >
-              <Layer
-                id="test-vector"
-                type="vector"
-                params={{
-                  color: '#00CC00',
+        {(map) => {
+          return (
+            <>
+              <LayerManager
+                map={map}
+                plugin={PluginMapboxGl}
+                providers={{
+                  [cartoProvider.name]: cartoProvider.handleData,
                 }}
-                source={{
-                  type: 'vector',
-                  provider: {
-                    type: 'carto',
-                    account: 'wri-01',
+              >
+                <Layer
+                  id="test-vector"
+                  type="vector"
+                  params={{
+                    color: '#00CC00',
+                  }}
+                  source={{
+                    type: 'vector',
+                    provider: {
+                      type: 'carto',
+                      account: 'wri-01',
+                      layers: [
+                        {
+                          options: {
+                            cartocss:
+                              '#wdpa_protected_areas {  polygon-opacity: 1.0; polygon-fill: #704489 }',
+                            cartocss_version: '2.3.0',
+                            sql: 'SELECT * FROM wdpa_protected_areas',
+                          },
+                          type: 'cartodb',
+                        },
+                      ],
+                    },
+                  }}
+                  render={{
                     layers: [
                       {
-                        options: {
-                          cartocss:
-                            '#wdpa_protected_areas {  polygon-opacity: 1.0; polygon-fill: #704489 }',
-                          cartocss_version: '2.3.0',
-                          sql: 'SELECT * FROM wdpa_protected_areas',
+                        type: 'line',
+                        'source-layer': 'layer0',
+                        paint: {
+                          'line-color': '#FFCC00',
+                          'line-opacity': 0.5,
+                          'line-width': 2,
                         },
-                        type: 'cartodb',
                       },
                     ],
-                  },
-                }}
-                render={{
-                  layers: [
-                    {
-                      type: 'line',
-                      'source-layer': 'layer0',
-                      paint: {
-                        'line-color': '#FFCC00',
-                        'line-opacity': 0.5,
-                        'line-width': 2,
-                      },
-                    },
-                  ],
-                }}
-              />
+                  }}
+                />
 
-              <Layer
-                id="bii-change"
-                type="raster"
-                source={{
-                  type: 'raster',
-                  tiles: [
-                    'https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana/BII/{z}/{x}/{y}.png',
-                  ],
-                }}
-                opacity={biiChangeOpacity}
-              />
-              <Layer {...args} deck={DECK_LAYERS} />
-            </LayerManager>
-            <Controls>
-              <ZoomControl id={id} />
-            </Controls>
-          </>
-        )}
+                <Layer
+                  id="bii-change"
+                  type="raster"
+                  source={{
+                    type: 'raster',
+                    tiles: [
+                      'https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana/BII/{z}/{x}/{y}.png',
+                    ],
+                  }}
+                  opacity={biiChangeOpacity}
+                />
+                <Layer {...args} deck={DECK_LAYERS} />
+              </LayerManager>
+              <Controls>
+                <ZoomControl id={id} />
+              </Controls>
+            </>
+          );
+        }}
       </Map>
     </div>
   );
@@ -366,7 +363,7 @@ APNGLayer02.args = {
   viewport: {},
   initialViewState: {},
   bounds: {
-    bbox: [48.69140625000001, -14.093957177836236, 49.04296875, -13.752724664396975],
+    bbox: [29.882812499999986, -2.1088986592431382, 30.5859375, -1.7575368113082999],
     options: { padding: 50, duration: 5000 },
   },
   onMapViewportChange: (viewport) => {
