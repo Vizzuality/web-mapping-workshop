@@ -26,7 +26,13 @@ const StoryMap = {
 export default StoryMap;
 
 const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
-  const { id, bounds, initialViewState } = args;
+  const { id, initialViewState } = args;
+  const [bounds] = useState({
+    bbox: [29.882812499999986, -2.1088986592431382, 30.5859375, -1.7575368113082999],
+    options: {
+      duration: 0,
+    },
+  });
   const [viewState, setViewState] = useState(initialViewState);
 
   const [biiOpacity, setBiiOpacity] = useState(1);
@@ -47,7 +53,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
         getTileData: (tile) => {
           const { x, y, z, signal } = tile;
-          const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana2/APNGs/Sentinel/${z}/${x}/${y}.png`;
+          const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Kigali/APNGs/Sentinel/${z}/${x}/${y}.png`;
           const response = fetch(url, { signal });
 
           if (signal.aborted) {
@@ -123,7 +129,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
         getTileData: (tile) => {
           const { x, y, z, signal } = tile;
-          const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana/BII/APNGs/${z}/${x}/${y}.png`;
+          const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Kigali/BII/APNGs/${z}/${x}/${y}.png`;
           const response = fetch(url, { signal });
 
           if (signal.aborted) {
@@ -299,7 +305,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
       <Map
         id={id}
-        bounds={bounds}
+        // bounds={bounds}
         initialViewState={initialViewState}
         viewState={viewState}
         mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
@@ -378,8 +384,8 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   );
 };
 
-export const APNGLayer01 = Template.bind({});
-APNGLayer01.args = {
+export const APNGLayer02 = Template.bind({});
+APNGLayer02.args = {
   id: 'apng-layer',
   className: '',
   viewport: {},
