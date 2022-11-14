@@ -218,7 +218,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   return (
     <div className="relative w-full h-[500px]">
       {/* Timeline */}
-      <div className="absolute top-0 left-0 bg-[#FEFEFE] text-black p-[10px] z-10 flex items-center space-x-[10px]">
+      <div className="absolute top-0 left-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-10">
         <button
           type="button"
           onClick={() => {
@@ -243,8 +243,8 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
       {/* Layers */}
 
-      <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-[10px] z-10 flex items-center space-x-[10px]">
-        <div>
+      <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
+        <div className="flex items-center space-x-2">
           <label htmlFor="#loss-layer">BII - 2017-2020</label>
           <input
             type="checkbox"
@@ -254,7 +254,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
             }}
           />
         </div>
-        <div>
+        <div className="flex items-center space-x-2">
           <label htmlFor="#loss-layer">BII Change - 2017-2020</label>
           <input
             type="checkbox"
