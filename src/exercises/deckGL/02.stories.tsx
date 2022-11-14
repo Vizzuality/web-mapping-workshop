@@ -222,28 +222,9 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   }, delay);
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '500px',
-      }}
-    >
+    <div className="relative w-full h-[500px]">
       {/* Timeline */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          background: '#FEFEFE',
-          color: '#000',
-          padding: '10px',
-          zIndex: 10,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-        }}
-      >
+      <div className="absolute top-0 left-0 bg-[#FEFEFE] text-black p-[10px] z-10 flex items-center space-x-[10px]">
         <button
           type="button"
           onClick={() => {
@@ -267,20 +248,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
       </div>
 
       {/* Layers */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          background: '#FEFEFE',
-          color: '#000',
-          padding: '10px',
-          zIndex: 10,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-        }}
-      >
+      <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-[10px] z-10 flex items-center space-x-[10px]">
         <div>
           <label htmlFor="#loss-layer">BII - 2017-2020</label>
           <input

@@ -5762,13 +5762,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/text-encoding-utf-8@npm:^1.0.1":
-  version: 1.0.2
-  resolution: "@types/text-encoding-utf-8@npm:1.0.2"
-  checksum: a7199bb5c09448274b0f7f6535d84594bad5b492933cd6423bdcf73724c6fe6cbadb2c49bb526cb4eda3d03538a2e62a7e372dcc7688d1e5f87ac2f5c4c4410a
-  languageName: node
-  linkType: hard
-
 "@types/uglify-js@npm:*":
   version: 3.16.0
   resolution: "@types/uglify-js@npm:3.16.0"
@@ -6636,13 +6629,11 @@ __metadata:
   dependencies:
     "@types/flatbuffers": ^1.10.0
     "@types/node": ^14.14.37
-    "@types/text-encoding-utf-8": ^1.0.1
     command-line-args: 5.1.1
     command-line-usage: 6.1.1
     flatbuffers: 1.12.0
     json-bignum: ^0.0.3
     pad-left: ^2.1.0
-    text-encoding-utf-8: ^1.0.2
     tslib: ^2.2.0
   bin:
     arrow2csv: bin/arrow2csv.js
@@ -18145,13 +18136,6 @@ __metadata:
     glob: ^7.1.4
     minimatch: ^3.0.4
   checksum: 3b34a3d77165a2cb82b34014b3aba93b1c4637a5011807557dc2f3da826c59975a5ccad765721c4648b39817e3472789f9b0fa98fc854c5c1c7a1e632aacdc28
-  languageName: node
-  linkType: hard
-
-"text-encoding-utf-8@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "text-encoding-utf-8@npm:1.0.2"
-  checksum: ec4c15d50e738c5dba7327ad432ebf0725ec75d4d69c0bd55609254c5a3bc5341272d7003691084a0a73d60d981c8eb0e87603676fdb6f3fed60f4c9192309f9
   languageName: node
   linkType: hard
 
