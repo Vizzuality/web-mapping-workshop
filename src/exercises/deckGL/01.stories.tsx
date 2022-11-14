@@ -35,7 +35,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   const [frame, setFrame] = useState(0);
   const [delay, setDelay] = useState(null);
 
-  const DECK_LAYERS = useMemo(() => {
+  const SATELLITE_DECK_LAYER = useMemo(() => {
     return [
       new MapboxLayer({
         id: `prediction-animated`,
@@ -113,6 +113,11 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         maxZoom: 14,
         extent: bounds.bbox,
       }),
+    ];
+  }, [frame, bounds.bbox]);
+
+  const BII_ANIMATED_DECK_LAYER = useMemo(() => {
+    return [
       new MapboxLayer({
         id: `BII-animated`,
         type: TileLayer,
@@ -191,6 +196,8 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
       }),
     ];
   }, [frame, biiOpacity, bounds.bbox]);
+
+  const DECK_LAYERS = [SATELLITE_DECK_LAYER, BII_ANIMATED_DECK_LAYER];
 
   const useInterval = (callback: () => void, delayInterval: number | null) => {
     const savedCallback = useRef(callback);
