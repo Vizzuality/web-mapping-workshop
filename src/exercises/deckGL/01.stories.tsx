@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
+
+import { ViewState } from 'react-map-gl';
 
 import { TileLayer } from '@deck.gl/geo-layers';
 import { BitmapLayer } from '@deck.gl/layers';
@@ -9,6 +11,7 @@ import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
 import CartoProvider from '@vizzuality/layer-manager-provider-carto';
 import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import parseAPNG from 'apng-js';
+import { useInterval } from 'usehooks-ts';
 
 import Map from 'components/map';
 import Controls from 'components/map/controls';
@@ -26,8 +29,8 @@ const StoryMap = {
 export default StoryMap;
 
 const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
-  const { id, bounds, initialViewState } = args;
-  const [viewState, setViewState] = useState(initialViewState);
+  const { id, initialViewState } = args;
+  const [viewState, setViewState] = useState<Partial<ViewState>>();
 
   const [biiOpacity, setBiiOpacity] = useState(1);
   const [biiChangeOpacity, setHumanFootprintOpacity] = useState(0);
@@ -111,10 +114,10 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         },
         minZoom: 10,
         maxZoom: 14,
-        extent: bounds.bbox,
+        extent: initialViewState.bounds,
       }),
     ];
-  }, [frame, bounds.bbox]);
+  }, [frame, initialViewState.bounds]);
 
   const BII_ANIMATED_DECK_LAYER = useMemo(() => {
     return [
@@ -139,6 +142,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
             .then((res) => res.arrayBuffer())
             .then((buffer) => {
               const apng = parseAPNG(buffer);
+
               if (apng instanceof Error) {
                 throw apng;
               }
@@ -192,28 +196,10 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         },
         minZoom: 10,
         maxZoom: 14,
-        extent: bounds.bbox,
+        extent: initialViewState.bounds,
       }),
     ];
-  }, [frame, biiOpacity, bounds.bbox]);
-
-  const DECK_LAYERS = [SATELLITE_DECK_LAYER, BII_ANIMATED_DECK_LAYER];
-
-  const useInterval = (callback: () => void, delayInterval: number | null) => {
-    const savedCallback = useRef(callback);
-
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      if (!delayInterval && delayInterval !== 0) {
-        return;
-      }
-
-      return () => clearInterval(setInterval(() => savedCallback.current(), delayInterval));
-    }, [delayInterval]);
-  };
+  }, [frame, biiOpacity, initialViewState.bounds]);
 
   useInterval(() => {
     // 2017-2020
@@ -227,6 +213,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
       {/* Timeline */}
       <div className="absolute top-0 left-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-10">
         <button
+          className="w-12"
           type="button"
           onClick={() => {
             setDelay(delay === null ? 1000 : null);
@@ -245,7 +232,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
             setFrame(+e.target.value - 2017);
           }}
         />
-        <span>{2017 + frame}</span>
+        <span className="w-12">{2017 + frame}</span>
       </div>
 
       {/* Layers */}
@@ -275,7 +262,6 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
       <Map
         id={id}
-        bounds={bounds}
         initialViewState={initialViewState}
         viewState={viewState}
         mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
@@ -342,7 +328,20 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                 }}
                 opacity={biiChangeOpacity}
               />
-              <Layer {...args} deck={DECK_LAYERS} />
+              <Layer
+                id="bii-deck-layer"
+                type="deck"
+                source={{ parse: false }}
+                render={{ parse: false }}
+                deck={BII_ANIMATED_DECK_LAYER}
+              />
+              <Layer
+                id="satellite-deck-layer"
+                type="deck"
+                source={{ parse: false }}
+                render={{ parse: false }}
+                deck={SATELLITE_DECK_LAYER}
+              />
             </LayerManager>
             <Controls>
               <ZoomControl id={id} />
@@ -354,15 +353,16 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   );
 };
 
-export const APNGLayer01 = Template.bind({});
-APNGLayer01.args = {
-  id: 'apng-layer',
+export const Tsaratanana = Template.bind({});
+Tsaratanana.args = {
+  id: 'tsaratanana-layer',
   className: '',
   viewport: {},
-  initialViewState: {},
-  bounds: {
-    bbox: [48.69140625000001, -14.093957177836236, 49.04296875, -13.752724664396975],
-    options: { padding: 50, duration: 5000 },
+  initialViewState: {
+    bounds: [48.69140625000001, -14.093957177836236, 49.04296875, -13.752724664396975],
+    fitBoundsOptions: {
+      padding: 50,
+    },
   },
   onMapViewportChange: (viewport) => {
     console.info('onMapViewportChange: ', viewport);

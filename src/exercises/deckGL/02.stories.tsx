@@ -228,6 +228,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
       {/* Timeline */}
       <div className="absolute top-0 left-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
         <button
+          className="w-12"
           type="button"
           onClick={() => {
             setDelay(delay === null ? 1000 : null);
@@ -246,7 +247,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
             setFrame(+e.target.value - 2017);
           }}
         />
-        <span>{2017 + frame}</span>
+        <span className="w-12">{2017 + frame}</span>
       </div>
 
       {/* Layers */}
