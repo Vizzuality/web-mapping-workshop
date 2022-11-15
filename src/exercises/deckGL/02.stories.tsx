@@ -316,14 +316,13 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                     ],
                   }}
                 />
-
                 <Layer
                   id="bii-change"
                   type="raster"
                   source={{
                     type: 'raster',
                     tiles: [
-                      'https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana/BII/{z}/{x}/{y}.png',
+                      'https://storage.googleapis.com/geo-ai/Redes/Tiles/Kigali/BII/{z}/{x}/{y}.png',
                     ],
                   }}
                   opacity={biiChangeOpacity}
