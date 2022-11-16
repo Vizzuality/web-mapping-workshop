@@ -14,8 +14,9 @@ import parseAPNG from 'apng-js';
 import { useInterval } from 'usehooks-ts';
 
 import Map from 'components/map';
-import Controls from 'components/map/controls';
-import ZoomControl from 'components/map/controls/zoom';
+import Legend from 'components/map/legend';
+import LegendItem from 'components/map/legend/item/component';
+import LegendTypeGradient from 'components/map/legend/types/gradient';
 import { CustomMapProps } from 'components/map/types';
 
 const cartoProvider = new CartoProvider();
@@ -345,9 +346,50 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                     deck={SATELLITE_DECK_LAYER}
                   />
                 </LayerManager>
-                <Controls>
-                  <ZoomControl id={id} />
-                </Controls>
+
+                <Legend
+                  className="left-4 w-[330px] bottom-4 absolute rounded-xl"
+                  maxHeight={'1030px'}
+                  collapsable={false}
+                  onChangeOrder={function F() {}}
+                >
+                  <LegendItem
+                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                    icon={null}
+                    id="gradient-example-1"
+                    name="BII Change - 2017-2020"
+                  >
+                    <LegendTypeGradient
+                      className="text-sm text-gray-300"
+                      items={[
+                        {
+                          color: '#5E8C5B',
+                          value: '0',
+                        },
+                        {
+                          color: null,
+                          value: '20',
+                        },
+                        {
+                          color: null,
+                          value: '40',
+                        },
+                        {
+                          color: null,
+                          value: '60',
+                        },
+                        {
+                          color: null,
+                          value: '80',
+                        },
+                        {
+                          color: '#B6D3B5',
+                          value: '100',
+                        },
+                      ]}
+                    />
+                  </LegendItem>
+                </Legend>
               </>
             )}
           </Map>
