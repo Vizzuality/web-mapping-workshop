@@ -209,146 +209,150 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   }, delay);
 
   return (
-    <div className="relative w-full h-[500px]">
-      {/* Timeline */}
-      <div className="absolute top-0 left-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-10">
-        <button
-          className="w-12"
-          type="button"
-          onClick={() => {
-            setDelay(delay === null ? 1000 : null);
-          }}
-        >
-          {!delay && 'Play'}
-          {delay && 'Pause'}
-        </button>
-        <input
-          type="range"
-          min={2017}
-          max={2020}
-          value={2017 + frame}
-          onChange={(e) => {
-            setDelay(null);
-            setFrame(+e.target.value - 2017);
-          }}
-        />
-        <span className="w-12">{2017 + frame}</span>
-      </div>
-
-      {/* Layers */}
-
-      <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
-        <div className="flex items-center space-x-2">
-          <label htmlFor="#loss-layer">BII - 2017-2020</label>
-          <input
-            type="checkbox"
-            checked={!!biiOpacity}
-            onChange={(e) => {
-              setBiiOpacity(e.target.checked ? 1 : 0);
-            }}
-          />
-        </div>
-        <div className="flex items-center space-x-2">
-          <label htmlFor="#loss-layer">BII Change - 2017-2020</label>
-          <input
-            type="checkbox"
-            checked={!!biiChangeOpacity}
-            onChange={(e) => {
-              setHumanFootprintOpacity(e.target.checked ? 1 : 0);
-            }}
-          />
-        </div>
-      </div>
-
-      <Map
-        id={id}
-        initialViewState={initialViewState}
-        viewState={viewState}
-        mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
-        onMapViewStateChange={(v) => {
-          setViewState(v);
-        }}
-      >
-        {(map) => (
-          <>
-            <LayerManager
-              map={map}
-              plugin={PluginMapboxGl}
-              providers={{
-                [cartoProvider.name]: cartoProvider.handleData,
+    <div className="relative w-full -m-4 h-full bg-[url('/images/tsaratanana-background.png')]">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-12 xl:px-24">
+        <div className="m-20 h-[560px] border-[30px] rounded-3xl border-black bg-black">
+          {/* Timeline */}
+          <div className="absolute top-0 left-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-10">
+            <button
+              className="w-12"
+              type="button"
+              onClick={() => {
+                setDelay(delay === null ? 1000 : null);
               }}
             >
-              <Layer
-                id="test-vector"
-                type="vector"
-                params={{
-                  color: '#00CC00',
-                }}
-                source={{
-                  type: 'vector',
-                  provider: {
-                    type: 'carto',
-                    account: 'wri-01',
-                    layers: [
-                      {
-                        options: {
-                          cartocss:
-                            '#wdpa_protected_areas {  polygon-opacity: 1.0; polygon-fill: #704489 }',
-                          cartocss_version: '2.3.0',
-                          sql: 'SELECT * FROM wdpa_protected_areas',
-                        },
-                        type: 'cartodb',
-                      },
-                    ],
-                  },
-                }}
-                render={{
-                  layers: [
-                    {
-                      type: 'line',
-                      'source-layer': 'layer0',
-                      paint: {
-                        'line-color': '#FFCC00',
-                        'line-opacity': 0.5,
-                        'line-width': 2,
-                      },
-                    },
-                  ],
-                }}
-              />
+              {!delay && 'Play'}
+              {delay && 'Pause'}
+            </button>
+            <input
+              type="range"
+              min={2017}
+              max={2020}
+              value={2017 + frame}
+              onChange={(e) => {
+                setDelay(null);
+                setFrame(+e.target.value - 2017);
+              }}
+            />
+            <span className="w-12">{2017 + frame}</span>
+          </div>
 
-              <Layer
-                id="bii-change"
-                type="raster"
-                source={{
-                  type: 'raster',
-                  tiles: [
-                    'https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana/BII/{z}/{x}/{y}.png',
-                  ],
+          {/* Layers */}
+
+          <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
+            <div className="flex items-center space-x-2">
+              <label htmlFor="#loss-layer">BII - 2017-2020</label>
+              <input
+                type="checkbox"
+                checked={!!biiOpacity}
+                onChange={(e) => {
+                  setBiiOpacity(e.target.checked ? 1 : 0);
                 }}
-                opacity={biiChangeOpacity}
               />
-              <Layer
-                id="bii-deck-layer"
-                type="deck"
-                source={{ parse: false }}
-                render={{ parse: false }}
-                deck={BII_ANIMATED_DECK_LAYER}
+            </div>
+            <div className="flex items-center space-x-2">
+              <label htmlFor="#loss-layer">BII Change - 2017-2020</label>
+              <input
+                type="checkbox"
+                checked={!!biiChangeOpacity}
+                onChange={(e) => {
+                  setHumanFootprintOpacity(e.target.checked ? 1 : 0);
+                }}
               />
-              <Layer
-                id="satellite-deck-layer"
-                type="deck"
-                source={{ parse: false }}
-                render={{ parse: false }}
-                deck={SATELLITE_DECK_LAYER}
-              />
-            </LayerManager>
-            <Controls>
-              <ZoomControl id={id} />
-            </Controls>
-          </>
-        )}
-      </Map>
+            </div>
+          </div>
+
+          <Map
+            id={id}
+            initialViewState={initialViewState}
+            viewState={viewState}
+            mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
+            onMapViewStateChange={(v) => {
+              setViewState(v);
+            }}
+          >
+            {(map) => (
+              <>
+                <LayerManager
+                  map={map}
+                  plugin={PluginMapboxGl}
+                  providers={{
+                    [cartoProvider.name]: cartoProvider.handleData,
+                  }}
+                >
+                  <Layer
+                    id="test-vector"
+                    type="vector"
+                    params={{
+                      color: '#00CC00',
+                    }}
+                    source={{
+                      type: 'vector',
+                      provider: {
+                        type: 'carto',
+                        account: 'wri-01',
+                        layers: [
+                          {
+                            options: {
+                              cartocss:
+                                '#wdpa_protected_areas {  polygon-opacity: 1.0; polygon-fill: #704489 }',
+                              cartocss_version: '2.3.0',
+                              sql: 'SELECT * FROM wdpa_protected_areas',
+                            },
+                            type: 'cartodb',
+                          },
+                        ],
+                      },
+                    }}
+                    render={{
+                      layers: [
+                        {
+                          type: 'line',
+                          'source-layer': 'layer0',
+                          paint: {
+                            'line-color': '#FFCC00',
+                            'line-opacity': 0.5,
+                            'line-width': 2,
+                          },
+                        },
+                      ],
+                    }}
+                  />
+
+                  <Layer
+                    id="bii-change"
+                    type="raster"
+                    source={{
+                      type: 'raster',
+                      tiles: [
+                        'https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana/BII/{z}/{x}/{y}.png',
+                      ],
+                    }}
+                    opacity={biiChangeOpacity}
+                  />
+                  <Layer
+                    id="bii-deck-layer"
+                    type="deck"
+                    source={{ parse: false }}
+                    render={{ parse: false }}
+                    deck={BII_ANIMATED_DECK_LAYER}
+                  />
+                  <Layer
+                    id="satellite-deck-layer"
+                    type="deck"
+                    source={{ parse: false }}
+                    render={{ parse: false }}
+                    deck={SATELLITE_DECK_LAYER}
+                  />
+                </LayerManager>
+                <Controls>
+                  <ZoomControl id={id} />
+                </Controls>
+              </>
+            )}
+          </Map>
+        </div>
+      </div>
     </div>
   );
 };
