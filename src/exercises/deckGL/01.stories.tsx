@@ -357,7 +357,50 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                     description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
                     icon={null}
                     id="gradient-example-1"
+                    name="BII - 2017-2020
+                    "
+                    checkbox
+                  >
+                    <LegendTypeGradient
+                      className="text-sm text-gray-300"
+                      items={[
+                        {
+                          color: '#E79F5F',
+                          value: '0',
+                        },
+                        {
+                          color: null,
+                          value: '20',
+                        },
+                        {
+                          color: null,
+                          value: '40',
+                        },
+                        {
+                          color: '#F1C48F',
+                          value: null,
+                        },
+                        {
+                          color: null,
+                          value: '60',
+                        },
+                        {
+                          color: null,
+                          value: '80',
+                        },
+                        {
+                          color: '#8FB0F1',
+                          value: '100',
+                        },
+                      ]}
+                    />
+                  </LegendItem>
+                  <LegendItem
+                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                    icon={null}
+                    id="gradient-example-1"
                     name="BII Change - 2017-2020"
+                    checkbox
                   >
                     <LegendTypeGradient
                       className="text-sm text-gray-300"

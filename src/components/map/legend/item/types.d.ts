@@ -5,5 +5,6 @@ export interface LegendItemProps {
   name: string;
   description?: string;
   icon?: ReactNode;
+  checkbox?: boolean;
   children?: ReactNode;
 }
