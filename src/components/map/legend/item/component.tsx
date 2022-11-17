@@ -19,17 +19,15 @@ export const LegendItem: FC<LegendItemProps> = ({
   return (
     <div className="relative">
       {checkbox && (
-        <div className="">
-          <input
-            type="checkbox"
-            className="absolute bg-black cursor-pointer top-3.5 left-3.5 focus:text-black focus:ring-black checked:bg-black"
-            checked={!!biiChangeOpacity}
-            onChange={(e) => {
-              e.preventDefault();
-              setHumanFootprintOpacity(e.target.checked ? 1 : 0);
-            }}
-          />
-        </div>
+        <input
+          type="checkbox"
+          className="absolute bg-black cursor-pointer top-3.5 left-3.5 focus:text-black focus:ring-black checked:bg-black"
+          checked={!!biiChangeOpacity}
+          onChange={(e) => {
+            e.preventDefault();
+            setHumanFootprintOpacity(e.target.checked ? 1 : 0);
+          }}
+        />
       )}
       <div
         key={id}
