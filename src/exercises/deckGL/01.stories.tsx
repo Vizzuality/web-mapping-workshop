@@ -2,6 +2,8 @@ import React, { useMemo, useState } from 'react';
 
 import { ViewState } from 'react-map-gl';
 
+import cx from 'classnames';
+
 import { TileLayer } from '@deck.gl/geo-layers';
 import { BitmapLayer } from '@deck.gl/layers';
 import { MapboxLayer } from '@deck.gl/mapbox';
@@ -13,11 +15,15 @@ import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import parseAPNG from 'apng-js';
 import { useInterval } from 'usehooks-ts';
 
+import Icon from 'components/icon';
 import Map from 'components/map';
 import Legend from 'components/map/legend';
 import LegendItem from 'components/map/legend/item/component';
 import LegendTypeGradient from 'components/map/legend/types/gradient';
 import { CustomMapProps } from 'components/map/types';
+
+import PAUSE_SVG from 'svgs/ui/pause.svg?sprite';
+import PLAY_SVG from 'svgs/ui/play.svg?sprite';
 
 const cartoProvider = new CartoProvider();
 
@@ -209,35 +215,29 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
     setFrame(f);
   }, delay);
 
+  const YEARS = [
+    {
+      value: 2017,
+      label: '2017',
+    },
+    {
+      value: 2018,
+      label: '2018',
+    },
+    {
+      value: 2019,
+      label: '2019',
+    },
+    {
+      value: 2020,
+      label: '2020',
+    },
+  ];
+
   return (
     <div className="relative w-full -m-4 h-full bg-[url('/images/tsaratanana-background.png')]">
       <div className="max-w-[1440px] mx-auto px-4 md:px-12 xl:px-24">
         <div className="m-20 h-[560px] border-[30px] rounded-3xl border-black bg-black">
-          {/* Timeline */}
-          <div className="absolute top-0 left-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-10">
-            <button
-              className="w-12"
-              type="button"
-              onClick={() => {
-                setDelay(delay === null ? 1000 : null);
-              }}
-            >
-              {!delay && 'Play'}
-              {delay && 'Pause'}
-            </button>
-            <input
-              type="range"
-              min={2017}
-              max={2020}
-              value={2017 + frame}
-              onChange={(e) => {
-                setDelay(null);
-                setFrame(+e.target.value - 2017);
-              }}
-            />
-            <span className="w-12">{2017 + frame}</span>
-          </div>
-
           {/* Layers */}
 
           <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
@@ -346,6 +346,55 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                     deck={SATELLITE_DECK_LAYER}
                   />
                 </LayerManager>
+
+                {/* Timeline */}
+                <div className="absolute z-10 flex items-center px-6 pt-2 pb-4 space-x-6 text-white bg-black rounded-full top-4 left-4">
+                  <button
+                    className="w-6 pt-2"
+                    type="button"
+                    onClick={() => {
+                      setDelay(delay === null ? 1000 : null);
+                    }}
+                  >
+                    {!delay && <Icon icon={PLAY_SVG} className="w-6 h-6" />}
+                    {delay && <Icon icon={PAUSE_SVG} className="w-6 h-6" />}
+                  </button>
+                  <div className="flex flex-col space-y-3 w-[230px]">
+                    <input
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                      type="range"
+                      id="tickmarks"
+                      min={2017}
+                      max={2020}
+                      value={2017 + frame}
+                      onChange={(e) => {
+                        setDelay(null);
+                        setFrame(+e.target.value - 2017);
+                      }}
+                    />
+
+                    <datalist
+                      id="tickmarks"
+                      className="absolute z-20 flex space-x-[38px] text-white top-2 left-[63px]"
+                    >
+                      {YEARS.map((y) => {
+                        return (
+                          <div key={y.label} className="flex flex-col items-center space-y-1">
+                            <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                            <option
+                              className={cx({
+                                'font-sans': true,
+                                'font-bold text-red-600': 2017 + frame === y.value,
+                              })}
+                              value={y.value}
+                              label={y.label}
+                            />
+                          </div>
+                        );
+                      })}
+                    </datalist>
+                  </div>
+                </div>
 
                 <Legend
                   className="left-4 w-[330px] bottom-4 absolute rounded-xl"
