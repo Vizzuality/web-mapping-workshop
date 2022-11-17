@@ -502,7 +502,7 @@ Tsaratanana.args = {
   className: '',
   viewport: {},
   initialViewState: {
-    bounds: [48.69140625000001, -14.093957177836236, 49.04296875, -13.752724664396975],
+    bounds: [48.494319, -14.0634, 48.967417, -13.834493],
     fitBoundsOptions: {
       padding: 50,
     },

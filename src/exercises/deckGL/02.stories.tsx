@@ -2,6 +2,8 @@ import React, { useMemo, useState } from 'react';
 
 import { ViewState } from 'react-map-gl';
 
+import cx from 'classnames';
+
 import { TileLayer } from '@deck.gl/geo-layers';
 import { BitmapLayer } from '@deck.gl/layers';
 import { MapboxLayer } from '@deck.gl/mapbox';
@@ -13,10 +15,12 @@ import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import parseAPNG from 'apng-js';
 import { useInterval } from 'usehooks-ts';
 
+import Icon from 'components/icon';
 import Map from 'components/map';
-import Controls from 'components/map/controls';
-import ZoomControl from 'components/map/controls/zoom';
 import { CustomMapProps } from 'components/map/types';
+
+import PAUSE_SVG from 'svgs/ui/pause.svg?sprite';
+import PLAY_SVG from 'svgs/ui/play.svg?sprite';
 
 const cartoProvider = new CartoProvider();
 
@@ -208,35 +212,29 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
     setFrame(f);
   }, delay);
 
+  const YEARS = [
+    {
+      value: 2017,
+      label: '2017',
+    },
+    {
+      value: 2018,
+      label: '2018',
+    },
+    {
+      value: 2019,
+      label: '2019',
+    },
+    {
+      value: 2020,
+      label: '2020',
+    },
+  ];
+
   return (
     <div className="relative w-full -m-4 h-full bg-[url('/images/kigali-background.png')]">
       <div className="max-w-[1440px] mx-auto px-4 md:px-12 xl:px-24">
         <div className="m-20 h-[560px] border-[30px] rounded-3xl border-black bg-black">
-          {/* Timeline  */}
-          <div className="absolute top-0 left-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
-            <button
-              className="w-12"
-              type="button"
-              onClick={() => {
-                setDelay(delay === null ? 1000 : null);
-              }}
-            >
-              {!delay && 'Play'}
-              {delay && 'Pause'}
-            </button>
-            <input
-              type="range"
-              min={2017}
-              max={2020}
-              value={2017 + frame}
-              onChange={(e) => {
-                setDelay(null);
-                setFrame(+e.target.value - 2017);
-              }}
-            />
-            <span className="w-12">{2017 + frame}</span>
-          </div>
-
           {/* Layers */}
           <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
             <div className="flex items-center space-x-2">
@@ -344,9 +342,59 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         deck={SATELLITE_DECK_LAYER}
                       />
                     </LayerManager>
-                    <Controls>
-                      <ZoomControl id={id} />
-                    </Controls>
+                    {/* Timeline */}
+                    <div className="absolute z-10 flex items-center pt-1 pb-3.5 pl-6 pr-12 space-x-9 text-white bg-black rounded-full c-timeline-slider top-4 left-4">
+                      <button
+                        className="w-6 pt-2.5"
+                        type="button"
+                        onClick={() => {
+                          setDelay(delay === null ? 1000 : null);
+                        }}
+                      >
+                        {!delay && <Icon icon={PLAY_SVG} className="w-6 h-6" />}
+                        {delay && <Icon icon={PAUSE_SVG} className="w-5 h-6" />}
+                      </button>
+                      <div className="flex flex-col space-y-3 w-[230px]">
+                        <input
+                          className="w-full h-px overflow-hidden bg-white rounded-lg appearance-none cursor-pointer"
+                          type="range"
+                          id="tickmarks"
+                          min={2017}
+                          max={2020}
+                          value={2017 + frame}
+                          onChange={(e) => {
+                            setDelay(null);
+                            setFrame(+e.target.value - 2017);
+                          }}
+                        />
+
+                        <datalist
+                          id="tickmarks"
+                          className="absolute z-20 flex space-x-[38px] text-white top-[6px] right-[30px]"
+                        >
+                          {YEARS.map((y) => {
+                            return (
+                              <div key={y.label} className="flex flex-col items-center space-y-1">
+                                <div
+                                  className={cx({
+                                    'w-1.5 h-1.5 bg-white rounded-full': true,
+                                    'scale-150': 2017 + frame === y.value,
+                                  })}
+                                />
+                                <option
+                                  className={cx({
+                                    'font-sans transition ease-in-out delay-300 text-sm': true,
+                                    'font-bold': 2017 + frame === y.value,
+                                  })}
+                                  value={y.value}
+                                  label={y.label}
+                                />
+                              </div>
+                            );
+                          })}
+                        </datalist>
+                      </div>
+                    </div>
                   </>
                 );
               }}
@@ -364,7 +412,7 @@ Kigali.args = {
   className: '',
   viewport: {},
   initialViewState: {
-    bounds: [29.882812499999986, -2.1088986592431382, 30.5859375, -1.7575368113082999],
+    bounds: [29.915595, -2.023647, 30.475944, -1.827919],
     fitBoundsOptions: {
       padding: 50,
     },
