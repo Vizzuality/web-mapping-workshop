@@ -13,6 +13,7 @@ import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
 import CartoProvider from '@vizzuality/layer-manager-provider-carto';
 import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import parseAPNG from 'apng-js';
+import useBreakpoint from 'use-breakpoint';
 import { useInterval } from 'usehooks-ts';
 
 import Icon from 'components/icon';
@@ -21,6 +22,7 @@ import Legend from 'components/map/legend';
 import LegendItem from 'components/map/legend/item/component';
 import LegendTypeGradient from 'components/map/legend/types/gradient';
 import { CustomMapProps } from 'components/map/types';
+import { BREAKPOINTS } from 'styles/styles.config';
 
 import PAUSE_SVG from 'svgs/ui/pause.svg?sprite';
 import PLAY_SVG from 'svgs/ui/play.svg?sprite';
@@ -37,6 +39,7 @@ export default StoryMap;
 
 const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   const { id, initialViewState } = args;
+  const { minWidth } = useBreakpoint(BREAKPOINTS);
 
   const [viewState, setViewState] = useState<Partial<ViewState>>();
 
@@ -379,7 +382,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                     <Legend
                       className="left-4 max-w-[330px] bottom-4 py-4 px-2 absolute rounded-xl z-10"
                       maxHeight={'1030px'}
-                      collapsable={false}
+                      collapsable={minWidth < BREAKPOINTS.lg}
                       sortable={false}
                     >
                       <LegendItem
