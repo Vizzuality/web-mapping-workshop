@@ -400,6 +400,47 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                           className="text-sm text-gray-300"
                           items={[
                             {
+                              color: '#5E8C5B',
+                              value: '0',
+                            },
+                            {
+                              color: null,
+                              value: '20',
+                            },
+                            {
+                              color: null,
+                              value: '40',
+                            },
+                            {
+                              color: null,
+                              value: '60',
+                            },
+                            {
+                              color: null,
+                              value: '80',
+                            },
+                            {
+                              color: '#B6D3B5',
+                              value: '100',
+                            },
+                          ]}
+                        />
+                      </LegendItem>
+                      <LegendItem
+                        description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                        icon={null}
+                        id="gradient-example-1"
+                        name="BII Change - 2017-2020"
+                        checkbox
+                        checked={!!biiChangeOpacity}
+                        onCheck={(e) => {
+                          setHumanFootprintOpacity(e.target.checked ? 1 : 0);
+                        }}
+                      >
+                        <LegendTypeGradient
+                          className="text-sm text-gray-300"
+                          items={[
+                            {
                               color: '#E79F5F',
                               value: '0',
                             },
@@ -425,47 +466,6 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                             },
                             {
                               color: '#8FB0F1',
-                              value: '100',
-                            },
-                          ]}
-                        />
-                      </LegendItem>
-                      <LegendItem
-                        description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-                        icon={null}
-                        id="gradient-example-1"
-                        name="BII Change - 2017-2020"
-                        checkbox
-                        checked={!!biiChangeOpacity}
-                        onCheck={(e) => {
-                          setHumanFootprintOpacity(e.target.checked ? 1 : 0);
-                        }}
-                      >
-                        <LegendTypeGradient
-                          className="text-sm text-gray-300"
-                          items={[
-                            {
-                              color: '#5E8C5B',
-                              value: '0',
-                            },
-                            {
-                              color: null,
-                              value: '20',
-                            },
-                            {
-                              color: null,
-                              value: '40',
-                            },
-                            {
-                              color: null,
-                              value: '60',
-                            },
-                            {
-                              color: null,
-                              value: '80',
-                            },
-                            {
-                              color: '#B6D3B5',
                               value: '100',
                             },
                           ]}
