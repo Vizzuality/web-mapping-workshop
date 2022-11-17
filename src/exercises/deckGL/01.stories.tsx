@@ -236,10 +236,8 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
   return (
     <div className="relative w-full -m-4 h-full bg-[url('/images/tsaratanana-background.png')]">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-12 xl:px-24">
-        <div className="m-20 h-[560px] border-[30px] rounded-3xl border-black bg-black">
-          {/* Layers */}
-
+      <div className="max-w-[1630px] mx-auto px-4 md:px-12 xl:px-24">
+        <div className="m-20 h-[700px] border-[30px] rounded-3xl border-black bg-black">
           <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
             <div className="flex items-center space-x-2">
               <label htmlFor="#loss-layer">BII - 2017-2020</label>
@@ -262,234 +260,235 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
               />
             </div>
           </div>
-
-          <Map
-            id={id}
-            initialViewState={initialViewState}
-            viewState={viewState}
-            mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
-            onMapViewStateChange={(v) => {
-              setViewState(v);
-            }}
-          >
-            {(map) => (
-              <>
-                <LayerManager
-                  map={map}
-                  plugin={PluginMapboxGl}
-                  providers={{
-                    [cartoProvider.name]: cartoProvider.handleData,
-                  }}
-                >
-                  <Layer
-                    id="test-vector"
-                    type="vector"
-                    params={{
-                      color: '#00CC00',
-                    }}
-                    source={{
-                      type: 'vector',
-                      provider: {
-                        type: 'carto',
-                        account: 'wri-01',
-                        layers: [
-                          {
-                            options: {
-                              cartocss:
-                                '#wdpa_protected_areas {  polygon-opacity: 1.0; polygon-fill: #704489 }',
-                              cartocss_version: '2.3.0',
-                              sql: 'SELECT * FROM wdpa_protected_areas',
-                            },
-                            type: 'cartodb',
-                          },
-                        ],
-                      },
-                    }}
-                    render={{
-                      layers: [
-                        {
-                          type: 'line',
-                          'source-layer': 'layer0',
-                          paint: {
-                            'line-color': '#FFCC00',
-                            'line-opacity': 0.5,
-                            'line-width': 2,
-                          },
-                        },
-                      ],
-                    }}
-                  />
-
-                  <Layer
-                    id="bii-change"
-                    type="raster"
-                    source={{
-                      type: 'raster',
-                      tiles: [
-                        'https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana/BII/{z}/{x}/{y}.png',
-                      ],
-                    }}
-                    opacity={biiChangeOpacity}
-                  />
-                  <Layer
-                    id="bii-deck-layer"
-                    type="deck"
-                    source={{ parse: false }}
-                    render={{ parse: false }}
-                    deck={BII_ANIMATED_DECK_LAYER}
-                  />
-                  <Layer
-                    id="satellite-deck-layer"
-                    type="deck"
-                    source={{ parse: false }}
-                    render={{ parse: false }}
-                    deck={SATELLITE_DECK_LAYER}
-                  />
-                </LayerManager>
-
-                {/* Timeline */}
-                <div className="absolute z-10 flex items-center pt-1 pb-3.5 pl-6 pr-12 space-x-9 text-white bg-black rounded-full c-timeline-slider top-4 left-4">
-                  <button
-                    className="w-6 pt-2.5"
-                    type="button"
-                    onClick={() => {
-                      setDelay(delay === null ? 1000 : null);
+          <div className="relative w-full h-full overflow-hidden rounded-2xl">
+            <Map
+              id={id}
+              initialViewState={initialViewState}
+              viewState={viewState}
+              mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
+              onMapViewStateChange={(v) => {
+                setViewState(v);
+              }}
+            >
+              {(map) => (
+                <>
+                  <LayerManager
+                    map={map}
+                    plugin={PluginMapboxGl}
+                    providers={{
+                      [cartoProvider.name]: cartoProvider.handleData,
                     }}
                   >
-                    {!delay && <Icon icon={PLAY_SVG} className="w-6 h-6" />}
-                    {delay && <Icon icon={PAUSE_SVG} className="w-5 h-6" />}
-                  </button>
-                  <div className="flex flex-col space-y-3 w-[230px]">
-                    <input
-                      className="w-full h-px overflow-hidden bg-white rounded-lg appearance-none cursor-pointer"
-                      type="range"
-                      id="tickmarks"
-                      min={2017}
-                      max={2020}
-                      value={2017 + frame}
-                      onChange={(e) => {
-                        setDelay(null);
-                        setFrame(+e.target.value - 2017);
+                    <Layer
+                      id="test-vector"
+                      type="vector"
+                      params={{
+                        color: '#00CC00',
+                      }}
+                      source={{
+                        type: 'vector',
+                        provider: {
+                          type: 'carto',
+                          account: 'wri-01',
+                          layers: [
+                            {
+                              options: {
+                                cartocss:
+                                  '#wdpa_protected_areas {  polygon-opacity: 1.0; polygon-fill: #704489 }',
+                                cartocss_version: '2.3.0',
+                                sql: 'SELECT * FROM wdpa_protected_areas',
+                              },
+                              type: 'cartodb',
+                            },
+                          ],
+                        },
+                      }}
+                      render={{
+                        layers: [
+                          {
+                            type: 'line',
+                            'source-layer': 'layer0',
+                            paint: {
+                              'line-color': '#FFCC00',
+                              'line-opacity': 0.5,
+                              'line-width': 2,
+                            },
+                          },
+                        ],
                       }}
                     />
 
-                    <datalist
-                      id="tickmarks"
-                      className="absolute z-20 flex space-x-[38px] text-white top-[6px] right-[30px]"
-                    >
-                      {YEARS.map((y) => {
-                        return (
-                          <div key={y.label} className="flex flex-col items-center space-y-1">
-                            <div
-                              className={cx({
-                                'w-1.5 h-1.5 bg-white rounded-full': true,
-                                'scale-150': 2017 + frame === y.value,
-                              })}
-                            />
-                            <option
-                              className={cx({
-                                'font-sans transition ease-in-out delay-300 text-sm': true,
-                                'font-bold': 2017 + frame === y.value,
-                              })}
-                              value={y.value}
-                              label={y.label}
-                            />
-                          </div>
-                        );
-                      })}
-                    </datalist>
-                  </div>
-                </div>
+                    <Layer
+                      id="bii-change"
+                      type="raster"
+                      source={{
+                        type: 'raster',
+                        tiles: [
+                          'https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana/BII/{z}/{x}/{y}.png',
+                        ],
+                      }}
+                      opacity={biiChangeOpacity}
+                    />
+                    <Layer
+                      id="bii-deck-layer"
+                      type="deck"
+                      source={{ parse: false }}
+                      render={{ parse: false }}
+                      deck={BII_ANIMATED_DECK_LAYER}
+                    />
+                    <Layer
+                      id="satellite-deck-layer"
+                      type="deck"
+                      source={{ parse: false }}
+                      render={{ parse: false }}
+                      deck={SATELLITE_DECK_LAYER}
+                    />
+                  </LayerManager>
 
-                <Legend
-                  className="left-4 w-[330px] bottom-4 absolute rounded-xl"
-                  maxHeight={'1030px'}
-                  collapsable={false}
-                  onChangeOrder={function F() {}}
-                >
-                  <LegendItem
-                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-                    icon={null}
-                    id="gradient-example-1"
-                    name="BII - 2017-2020
+                  {/* Timeline */}
+                  <div className="absolute z-10 flex items-center pt-1 pb-3.5 pl-6 pr-12 space-x-7 text-white bg-black rounded-full c-timeline-slider top-4 left-4 w-[330px]">
+                    <button
+                      className="w-6 pt-2.5"
+                      type="button"
+                      onClick={() => {
+                        setDelay(delay === null ? 1000 : null);
+                      }}
+                    >
+                      {!delay && <Icon icon={PLAY_SVG} className="w-6 h-6" />}
+                      {delay && <Icon icon={PAUSE_SVG} className="w-5 h-6" />}
+                    </button>
+                    <div className="flex flex-col space-y-3 w-[230px]">
+                      <input
+                        className="w-full h-px overflow-hidden bg-white rounded-lg appearance-none cursor-pointer"
+                        type="range"
+                        id="tickmarks"
+                        min={2017}
+                        max={2020}
+                        value={2017 + frame}
+                        onChange={(e) => {
+                          setDelay(null);
+                          setFrame(+e.target.value - 2017);
+                        }}
+                      />
+
+                      <datalist
+                        id="tickmarks"
+                        className="absolute z-20 flex space-x-[30px] text-white top-[6px] right-[30px]"
+                      >
+                        {YEARS.map((y) => {
+                          return (
+                            <div key={y.label} className="flex flex-col items-center space-y-1">
+                              <div
+                                className={cx({
+                                  'w-1.5 h-1.5 bg-white rounded-full': true,
+                                  'scale-150': 2017 + frame === y.value,
+                                })}
+                              />
+                              <option
+                                className={cx({
+                                  'font-sans transition ease-in-out delay-300 text-sm': true,
+                                  'font-bold': 2017 + frame === y.value,
+                                })}
+                                value={y.value}
+                                label={y.label}
+                              />
+                            </div>
+                          );
+                        })}
+                      </datalist>
+                    </div>
+                  </div>
+
+                  <Legend
+                    className="left-4 z-10 w-[330px] bottom-4 absolute rounded-xl"
+                    maxHeight={'1030px'}
+                    collapsable={false}
+                    onChangeOrder={function F() {}}
+                  >
+                    <LegendItem
+                      description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                      icon={null}
+                      id="gradient-example-1"
+                      name="BII - 2017-2020
                     "
-                    checkbox
-                  >
-                    <LegendTypeGradient
-                      className="text-sm text-gray-300"
-                      items={[
-                        {
-                          color: '#E79F5F',
-                          value: '0',
-                        },
-                        {
-                          color: null,
-                          value: '20',
-                        },
-                        {
-                          color: null,
-                          value: '40',
-                        },
-                        {
-                          color: '#F1C48F',
-                          value: null,
-                        },
-                        {
-                          color: null,
-                          value: '60',
-                        },
-                        {
-                          color: null,
-                          value: '80',
-                        },
-                        {
-                          color: '#8FB0F1',
-                          value: '100',
-                        },
-                      ]}
-                    />
-                  </LegendItem>
-                  <LegendItem
-                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-                    icon={null}
-                    id="gradient-example-1"
-                    name="BII Change - 2017-2020"
-                    checkbox
-                  >
-                    <LegendTypeGradient
-                      className="text-sm text-gray-300"
-                      items={[
-                        {
-                          color: '#5E8C5B',
-                          value: '0',
-                        },
-                        {
-                          color: null,
-                          value: '20',
-                        },
-                        {
-                          color: null,
-                          value: '40',
-                        },
-                        {
-                          color: null,
-                          value: '60',
-                        },
-                        {
-                          color: null,
-                          value: '80',
-                        },
-                        {
-                          color: '#B6D3B5',
-                          value: '100',
-                        },
-                      ]}
-                    />
-                  </LegendItem>
-                </Legend>
-              </>
-            )}
-          </Map>
+                      checkbox
+                    >
+                      <LegendTypeGradient
+                        className="text-sm text-gray-300"
+                        items={[
+                          {
+                            color: '#E79F5F',
+                            value: '0',
+                          },
+                          {
+                            color: null,
+                            value: '20',
+                          },
+                          {
+                            color: null,
+                            value: '40',
+                          },
+                          {
+                            color: '#F1C48F',
+                            value: null,
+                          },
+                          {
+                            color: null,
+                            value: '60',
+                          },
+                          {
+                            color: null,
+                            value: '80',
+                          },
+                          {
+                            color: '#8FB0F1',
+                            value: '100',
+                          },
+                        ]}
+                      />
+                    </LegendItem>
+                    <LegendItem
+                      description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                      icon={null}
+                      id="gradient-example-1"
+                      name="BII Change - 2017-2020"
+                      checkbox
+                    >
+                      <LegendTypeGradient
+                        className="text-sm text-gray-300"
+                        items={[
+                          {
+                            color: '#5E8C5B',
+                            value: '0',
+                          },
+                          {
+                            color: null,
+                            value: '20',
+                          },
+                          {
+                            color: null,
+                            value: '40',
+                          },
+                          {
+                            color: null,
+                            value: '60',
+                          },
+                          {
+                            color: null,
+                            value: '80',
+                          },
+                          {
+                            color: '#B6D3B5',
+                            value: '100',
+                          },
+                        ]}
+                      />
+                    </LegendItem>
+                  </Legend>
+                </>
+              )}
+            </Map>
+          </div>
         </div>
       </div>
     </div>

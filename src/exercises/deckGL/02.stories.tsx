@@ -17,6 +17,9 @@ import { useInterval } from 'usehooks-ts';
 
 import Icon from 'components/icon';
 import Map from 'components/map';
+import Legend from 'components/map/legend';
+import LegendItem from 'components/map/legend/item/component';
+import LegendTypeGradient from 'components/map/legend/types/gradient';
 import { CustomMapProps } from 'components/map/types';
 
 import PAUSE_SVG from 'svgs/ui/pause.svg?sprite';
@@ -233,9 +236,8 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
   return (
     <div className="relative w-full -m-4 h-full bg-[url('/images/kigali-background.png')]">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-12 xl:px-24">
-        <div className="m-20 h-[560px] border-[30px] rounded-3xl border-black bg-black">
-          {/* Layers */}
+      <div className="max-w-[1630px] mx-auto px-4 md:px-12 xl:px-24">
+        <div className="m-20 h-[700px] border-[30px] rounded-3xl border-black bg-black">
           <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
             <div className="flex items-center space-x-2">
               <label htmlFor="#loss-layer">BII - 2017-2020</label>
@@ -343,7 +345,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       />
                     </LayerManager>
                     {/* Timeline */}
-                    <div className="absolute z-10 flex items-center pt-1 pb-3.5 pl-6 pr-12 space-x-9 text-white bg-black rounded-full c-timeline-slider top-4 left-4">
+                    <div className="absolute z-10 flex items-center pt-1 pb-3.5 pl-6 pr-12 space-x-7 text-white bg-black rounded-full c-timeline-slider top-4 left-4 w-[330px]">
                       <button
                         className="w-6 pt-2.5"
                         type="button"
@@ -370,7 +372,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
                         <datalist
                           id="tickmarks"
-                          className="absolute z-20 flex space-x-[38px] text-white top-[6px] right-[30px]"
+                          className="absolute z-20 flex space-x-[30px] text-white top-[6px] right-[30px]"
                         >
                           {YEARS.map((y) => {
                             return (
@@ -395,6 +397,92 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         </datalist>
                       </div>
                     </div>
+
+                    <Legend
+                      className="left-4 w-[330px] bottom-4 absolute rounded-xl z-10"
+                      maxHeight={'1030px'}
+                      collapsable={false}
+                      onChangeOrder={function F() {}}
+                    >
+                      <LegendItem
+                        description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                        icon={null}
+                        id="gradient-example-1"
+                        name="BII - 2017-2020"
+                        checkbox
+                      >
+                        <LegendTypeGradient
+                          className="text-sm text-gray-300"
+                          items={[
+                            {
+                              color: '#E79F5F',
+                              value: '0',
+                            },
+                            {
+                              color: null,
+                              value: '20',
+                            },
+                            {
+                              color: null,
+                              value: '40',
+                            },
+                            {
+                              color: '#F1C48F',
+                              value: null,
+                            },
+                            {
+                              color: null,
+                              value: '60',
+                            },
+                            {
+                              color: null,
+                              value: '80',
+                            },
+                            {
+                              color: '#8FB0F1',
+                              value: '100',
+                            },
+                          ]}
+                        />
+                      </LegendItem>
+                      <LegendItem
+                        description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                        icon={null}
+                        id="gradient-example-1"
+                        name="BII Change - 2017-2020"
+                        checkbox
+                      >
+                        <LegendTypeGradient
+                          className="text-sm text-gray-300"
+                          items={[
+                            {
+                              color: '#5E8C5B',
+                              value: '0',
+                            },
+                            {
+                              color: null,
+                              value: '20',
+                            },
+                            {
+                              color: null,
+                              value: '40',
+                            },
+                            {
+                              color: null,
+                              value: '60',
+                            },
+                            {
+                              color: null,
+                              value: '80',
+                            },
+                            {
+                              color: '#B6D3B5',
+                              value: '100',
+                            },
+                          ]}
+                        />
+                      </LegendItem>
+                    </Legend>
                   </>
                 );
               }}
