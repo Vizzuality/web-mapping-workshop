@@ -348,20 +348,20 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                 </LayerManager>
 
                 {/* Timeline */}
-                <div className="absolute z-10 flex items-center px-6 pt-2 pb-4 space-x-6 text-white bg-black rounded-full top-4 left-4">
+                <div className="absolute z-10 flex items-center pt-1 pb-3.5 pl-6 pr-12 space-x-9 text-white bg-black rounded-full c-timeline-slider top-4 left-4">
                   <button
-                    className="w-6 pt-2"
+                    className="w-6 pt-2.5"
                     type="button"
                     onClick={() => {
                       setDelay(delay === null ? 1000 : null);
                     }}
                   >
                     {!delay && <Icon icon={PLAY_SVG} className="w-6 h-6" />}
-                    {delay && <Icon icon={PAUSE_SVG} className="w-6 h-6" />}
+                    {delay && <Icon icon={PAUSE_SVG} className="w-5 h-6" />}
                   </button>
                   <div className="flex flex-col space-y-3 w-[230px]">
                     <input
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                      className="w-full h-px overflow-hidden bg-white rounded-lg appearance-none cursor-pointer"
                       type="range"
                       id="tickmarks"
                       min={2017}
@@ -375,16 +375,21 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
                     <datalist
                       id="tickmarks"
-                      className="absolute z-20 flex space-x-[38px] text-white top-2 left-[63px]"
+                      className="absolute z-20 flex space-x-[38px] text-white top-[6px] right-[30px]"
                     >
                       {YEARS.map((y) => {
                         return (
                           <div key={y.label} className="flex flex-col items-center space-y-1">
-                            <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                            <div
+                              className={cx({
+                                'w-1.5 h-1.5 bg-white rounded-full': true,
+                                'scale-150': 2017 + frame === y.value,
+                              })}
+                            />
                             <option
                               className={cx({
-                                'font-sans': true,
-                                'font-bold text-red-600': 2017 + frame === y.value,
+                                'font-sans transition ease-in-out delay-300 text-sm': true,
+                                'font-bold': 2017 + frame === y.value,
                               })}
                               value={y.value}
                               label={y.label}

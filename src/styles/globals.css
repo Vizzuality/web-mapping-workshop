@@ -27,6 +27,10 @@
     @apply bg-opacity-40;
   }
 
+  .c-timeline-slider input[type='range']::-webkit-slider-thumb {
+    display: none;
+  }
+
   @supports (backdrop-filter: blur(4px)) {
     .bg-blur {
       @apply bg-opacity-20;
