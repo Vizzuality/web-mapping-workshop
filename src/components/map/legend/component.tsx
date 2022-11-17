@@ -31,7 +31,7 @@ export const Legend: FC<LegendProps> = ({
   return (
     <div
       className={cx({
-        'bg-black rounded-3xl flex flex-col grow': true,
+        'bg-black rounded-3xl flex flex-col grow w-full': true,
         [className]: !!className,
       })}
     >
@@ -49,7 +49,7 @@ export const Legend: FC<LegendProps> = ({
           <Icon
             icon={ARROW_DOWN_SVG}
             className={cx({
-              'absolute w-3 h-3 transition-transform transform -translate-y-1/2 text-blue-500 top-1/2 right-5':
+              'absolute w-3 h-3 transition-transform transform -translate-y-1/2 text-white top-1/2 right-5':
                 true,
               'rotate-180': active,
             })}

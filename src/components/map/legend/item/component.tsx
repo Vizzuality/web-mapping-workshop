@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 import cx from 'classnames';
 
@@ -13,26 +13,24 @@ export const LegendItem: FC<LegendItemProps> = ({
   icon,
   children,
   checkbox = false,
+  checked,
+  onCheck,
 }: LegendItemProps) => {
-  const [checkedLayer, setCheckedLayer] = useState(0);
-
   return (
     <div className="relative">
       {checkbox && (
         <input
           type="checkbox"
-          className="absolute  bg-black cursor-pointer top-3.5 left-3.5 focus:text-black focus:ring-black checked:bg-black"
-          checked={!!checkedLayer}
-          onChange={(e) => {
-            setCheckedLayer(e.target.checked ? 1 : 0);
-          }}
+          className="absolute bg-black cursor-pointer top-3.5 left-5 focus:text-black text-black focus:ring-black focus:bg-black checked:bg-black checked:border-[0.5px] checked:border-white hover:border-[0.5px] hover:border-white"
+          checked={checked}
+          onChange={onCheck}
         />
       )}
       <div
         key={id}
         className={cx({
           'py-3 px-5': true,
-          'ml-5': checkbox,
+          'ml-6': checkbox,
         })}
       >
         <div className="flex">

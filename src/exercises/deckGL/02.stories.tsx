@@ -238,28 +238,6 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
     <div className="relative w-full -m-4 h-full bg-[url('/images/kigali-background.png')]">
       <div className="max-w-[1630px] mx-auto px-4 md:px-12 xl:px-24">
         <div className="m-20 h-[700px] border-[30px] rounded-3xl border-black bg-black">
-          <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
-            <div className="flex items-center space-x-2">
-              <label htmlFor="#loss-layer">BII - 2017-2020</label>
-              <input
-                type="checkbox"
-                checked={!!biiOpacity}
-                onChange={(e) => {
-                  setBiiOpacity(e.target.checked ? 1 : 0);
-                }}
-              />
-            </div>
-            <div className="flex items-center space-x-2">
-              <label htmlFor="#loss-layer">BII Change - 2017-2020</label>
-              <input
-                type="checkbox"
-                checked={!!biiChangeOpacity}
-                onChange={(e) => {
-                  setHumanFootprintOpacity(e.target.checked ? 1 : 0);
-                }}
-              />
-            </div>
-          </div>
           <div className="relative w-full h-full overflow-hidden rounded-2xl">
             <Map
               id={id}
@@ -345,7 +323,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       />
                     </LayerManager>
                     {/* Timeline */}
-                    <div className="absolute z-10 flex items-center pt-1 pb-3.5 pl-6 pr-12 space-x-7 text-white bg-black rounded-full c-timeline-slider top-4 left-4 w-[330px]">
+                    <div className="absolute z-10 flex items-center pt-1 pb-3.5 pl-6 pr-12 space-x-7 text-white bg-black rounded-full c-timeline-slider top-4 left-4 max-w-[330px]">
                       <button
                         className="w-6 pt-2.5"
                         type="button"
@@ -399,7 +377,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                     </div>
 
                     <Legend
-                      className="left-4 w-[330px] bottom-4 absolute rounded-xl z-10"
+                      className="left-4 max-w-[330px] bottom-4 py-4 px-2 absolute rounded-xl z-10"
                       maxHeight={'1030px'}
                       collapsable={false}
                       sortable={false}
@@ -410,6 +388,10 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         id="gradient-example-1"
                         name="BII - 2017-2020"
                         checkbox
+                        checked={!!biiOpacity}
+                        onCheck={(e) => {
+                          setBiiOpacity(e.target.checked ? 1 : 0);
+                        }}
                       >
                         <LegendTypeGradient
                           className="text-sm text-gray-300"
@@ -451,6 +433,10 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         id="gradient-example-1"
                         name="BII Change - 2017-2020"
                         checkbox
+                        checked={!!biiChangeOpacity}
+                        onCheck={(e) => {
+                          setHumanFootprintOpacity(e.target.checked ? 1 : 0);
+                        }}
                       >
                         <LegendTypeGradient
                           className="text-sm text-gray-300"

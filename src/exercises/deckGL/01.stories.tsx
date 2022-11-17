@@ -13,6 +13,7 @@ import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
 import CartoProvider from '@vizzuality/layer-manager-provider-carto';
 import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 import parseAPNG from 'apng-js';
+import useBreakpoint from 'use-breakpoint';
 import { useInterval } from 'usehooks-ts';
 
 import Icon from 'components/icon';
@@ -21,6 +22,7 @@ import Legend from 'components/map/legend';
 import LegendItem from 'components/map/legend/item/component';
 import LegendTypeGradient from 'components/map/legend/types/gradient';
 import { CustomMapProps } from 'components/map/types';
+import { BREAKPOINTS } from 'styles/styles.config';
 
 import PAUSE_SVG from 'svgs/ui/pause.svg?sprite';
 import PLAY_SVG from 'svgs/ui/play.svg?sprite';
@@ -37,6 +39,8 @@ export default StoryMap;
 
 const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   const { id, initialViewState } = args;
+  const { minWidth } = useBreakpoint(BREAKPOINTS);
+
   const [viewState, setViewState] = useState<Partial<ViewState>>();
 
   const [biiOpacity, setBiiOpacity] = useState(1);
@@ -238,28 +242,6 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
     <div className="relative w-full -m-4 h-full bg-[url('/images/tsaratanana-background.png')]">
       <div className="max-w-[1630px] mx-auto px-4 md:px-12 xl:px-24">
         <div className="m-20 h-[700px] border-[30px] rounded-3xl border-black bg-black">
-          <div className="absolute top-0 right-0 bg-[#FEFEFE] text-black p-4 z-10 flex items-center space-x-6">
-            <div className="flex items-center space-x-2">
-              <label htmlFor="#loss-layer">BII - 2017-2020</label>
-              <input
-                type="checkbox"
-                checked={!!biiOpacity}
-                onChange={(e) => {
-                  setBiiOpacity(e.target.checked ? 1 : 0);
-                }}
-              />
-            </div>
-            <div className="flex items-center space-x-2">
-              <label htmlFor="#loss-layer">BII Change - 2017-2020</label>
-              <input
-                type="checkbox"
-                checked={!!biiChangeOpacity}
-                onChange={(e) => {
-                  setHumanFootprintOpacity(e.target.checked ? 1 : 0);
-                }}
-              />
-            </div>
-          </div>
           <div className="relative w-full h-full overflow-hidden rounded-2xl">
             <Map
               id={id}
@@ -398,18 +380,11 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       </datalist>
                     </div>
                   </div>
-                  <input
-                    type="checkbox"
-                    className="absolute z-50 bg-black cursor-pointer bottom-[245px] left-3 focus:text-black focus:ring-black checked:bg-black"
-                    checked={!!biiChangeOpacity}
-                    onChange={(e) => {
-                      setHumanFootprintOpacity(e.target.checked ? 1 : 0);
-                    }}
-                  />
+
                   <Legend
-                    className="left-4 z-10 w-[330px] bottom-4 absolute rounded-xl"
+                    className="left-4 max-w-[330px] bottom-4 py-4 px-2 absolute rounded-xl z-10"
                     maxHeight={'1030px'}
-                    collapsable={false}
+                    collapsable={minWidth < BREAKPOINTS.lg}
                     sortable={false}
                   >
                     <LegendItem
@@ -417,7 +392,11 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       icon={null}
                       id="gradient-example-1"
                       name="BII - 2017-2020"
-                      // checkbox
+                      checkbox
+                      checked={!!biiOpacity}
+                      onCheck={(e) => {
+                        setBiiOpacity(e.target.checked ? 1 : 0);
+                      }}
                     >
                       <LegendTypeGradient
                         className="text-sm text-gray-300"
@@ -460,6 +439,10 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       id="gradient-example-1"
                       name="BII Change - 2017-2020"
                       checkbox
+                      checked={!!biiChangeOpacity}
+                      onCheck={(e) => {
+                        setHumanFootprintOpacity(e.target.checked ? 1 : 0);
+                      }}
                     >
                       <LegendTypeGradient
                         className="text-sm text-gray-300"

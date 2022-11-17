@@ -10695,6 +10695,7 @@ __metadata:
     svgo-loader: 2.2.2
     tailwindcss: 3.1.7
     typescript: 4.4.4
+    use-breakpoint: ^3.0.3
     use-debounce: 6.0.1
     usehooks-ts: ^2.9.1
     validate.js: 0.13.1
@@ -18824,6 +18825,16 @@ __metadata:
   dependencies:
     unidecode: 0.1.8
   checksum: f71efd9c6d52429103c2d75898325752c20ebdb795866960e988335667bc3153d46d4a4d7818cc50bffb6a9581b3b0707a38039a20b2e1626a9292212255c849
+  languageName: node
+  linkType: hard
+
+"use-breakpoint@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "use-breakpoint@npm:3.0.3"
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 4dbc3f7d7cc78d77527d424d9664a49ca2fc8875986db1428421e04fa87fa815f3c8fddd3e5f2895e16478bb472b717869f423242f8b0f774f26f96def85cb4c
   languageName: node
   linkType: hard
 
