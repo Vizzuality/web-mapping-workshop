@@ -372,7 +372,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
                         <datalist
                           id="tickmarks"
-                          className="absolute z-20 flex space-x-[30px] text-white top-[6px] right-[30px]"
+                          className="absolute z-20 flex space-x-[31px] text-white top-[6px] right-[30px]"
                         >
                           {YEARS.map((y) => {
                             return (
@@ -402,7 +402,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       className="left-4 w-[330px] bottom-4 absolute rounded-xl z-10"
                       maxHeight={'1030px'}
                       collapsable={false}
-                      onChangeOrder={function F() {}}
+                      sortable={false}
                     >
                       <LegendItem
                         description="Lorem ipsum dolor sit amet consectetur adipisicing elit."

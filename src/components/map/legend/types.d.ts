@@ -3,7 +3,8 @@ export interface LegendProps {
   children: React.ReactNode;
   maxHeight: string | number;
   collapsable?: boolean;
-  onChangeOrder: (id: string[]) => void;
+  sortable?: boolean;
+  onChangeOrder?: (id: string[]) => void;
 }
 
 export type LegendTypeItem = {

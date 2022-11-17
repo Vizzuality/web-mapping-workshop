@@ -373,7 +373,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
                       <datalist
                         id="tickmarks"
-                        className="absolute z-20 flex space-x-[30px] text-white top-[6px] right-[30px]"
+                        className="absolute z-20 flex space-x-[31px] text-white top-[6px] right-[30px]"
                       >
                         {YEARS.map((y) => {
                           return (
@@ -398,20 +398,26 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       </datalist>
                     </div>
                   </div>
-
+                  <input
+                    type="checkbox"
+                    className="absolute z-50 bg-black cursor-pointer bottom-[245px] left-3 focus:text-black focus:ring-black checked:bg-black"
+                    checked={!!biiChangeOpacity}
+                    onChange={(e) => {
+                      setHumanFootprintOpacity(e.target.checked ? 1 : 0);
+                    }}
+                  />
                   <Legend
                     className="left-4 z-10 w-[330px] bottom-4 absolute rounded-xl"
                     maxHeight={'1030px'}
                     collapsable={false}
-                    onChangeOrder={function F() {}}
+                    sortable={false}
                   >
                     <LegendItem
                       description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
                       icon={null}
                       id="gradient-example-1"
-                      name="BII - 2017-2020
-                    "
-                      checkbox
+                      name="BII - 2017-2020"
+                      // checkbox
                     >
                       <LegendTypeGradient
                         className="text-sm text-gray-300"
@@ -447,6 +453,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         ]}
                       />
                     </LegendItem>
+
                     <LegendItem
                       description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
                       icon={null}

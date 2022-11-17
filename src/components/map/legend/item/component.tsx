@@ -14,18 +14,17 @@ export const LegendItem: FC<LegendItemProps> = ({
   children,
   checkbox = false,
 }: LegendItemProps) => {
-  const [biiChangeOpacity, setHumanFootprintOpacity] = useState(0);
-  console.log({ biiChangeOpacity });
+  const [checkedLayer, setCheckedLayer] = useState(0);
+
   return (
     <div className="relative">
       {checkbox && (
         <input
           type="checkbox"
-          className="absolute bg-black cursor-pointer top-3.5 left-3.5 focus:text-black focus:ring-black checked:bg-black"
-          checked={!!biiChangeOpacity}
+          className="absolute  bg-black cursor-pointer top-3.5 left-3.5 focus:text-black focus:ring-black checked:bg-black"
+          checked={!!checkedLayer}
           onChange={(e) => {
-            e.preventDefault();
-            setHumanFootprintOpacity(e.target.checked ? 1 : 0);
+            setCheckedLayer(e.target.checked ? 1 : 0);
           }}
         />
       )}
