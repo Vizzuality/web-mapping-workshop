@@ -64,7 +64,7 @@ export const Legend: FC<LegendProps> = ({
             maxHeight,
           }}
         >
-          <div className="absolute top-0 left-0 z-10 w-full h-4 pointer-events-none bg-gradient-to-b from-black via-black" />
+          <div className="absolute top-0 left-0 z-10 w-full h-4 pointer-events-none" />
           <div className="overflow-x-hidden overflow-y-auto">
             {sortable && <SortableList onChangeOrder={onChangeOrder}>{children}</SortableList>}
             {!sortable && children}
