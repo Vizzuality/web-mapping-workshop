@@ -500,7 +500,7 @@ Kigali.args = {
   className: '',
   viewport: {},
   initialViewState: {
-    bounds: [29.915595, -2.023647, 30.475944, -1.827919],
+    bounds: [29.909188, -2.038595, 30.378167, -1.792914],
     fitBoundsOptions: {
       padding: 50,
     },
