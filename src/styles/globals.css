@@ -28,7 +28,11 @@
   }
 
   .c-timeline-slider input[type='range']::-webkit-slider-thumb {
-    display: none;
+    background-color: transparent;
+    height: 53px;
+    margin-top: 10px;
+    width: 18px;
+    -webkit-appearance: none;
   }
 
   @supports (backdrop-filter: blur(4px)) {

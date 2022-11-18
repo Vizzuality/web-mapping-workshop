@@ -339,7 +339,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       </button>
                       <div className="flex flex-col space-y-3 w-[230px]">
                         <input
-                          className="w-full h-px overflow-hidden bg-white rounded-lg appearance-none cursor-pointer"
+                          className="w-full h-px bg-white rounded-lg appearance-none cursor-pointer"
                           type="range"
                           id="tickmarks"
                           min={2017}
@@ -353,7 +353,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
                         <datalist
                           id="tickmarks"
-                          className="absolute z-20 flex space-x-[31px] text-white top-[6px] right-[30px]"
+                          className="pointer-events-none absolute z-20 flex space-x-[31px]  text-white top-[6px] right-[30px]"
                         >
                           {YEARS.map((y) => {
                             return (
