@@ -28,7 +28,7 @@
   }
 
   .c-timeline-slider input[type='range']::-webkit-slider-thumb {
-    background-color: red;
+    background-color: transparent;
     padding-right: 10px;
     height: 53px;
     margin-top: 10px;

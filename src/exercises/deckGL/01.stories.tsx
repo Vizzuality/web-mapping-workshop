@@ -328,7 +328,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                   </LayerManager>
 
                   {/* Timeline */}
-                  <div className="absolute z-10 flex items-center pt-1 pb-3.5 pl-6 pr-12 space-x-7 text-white bg-black rounded-full c-timeline-slider top-4 left-4 w-[330px]">
+                  <div className="absolute z-10 flex items-center pt-1 pb-3.5 pl-6 pr-6 space-x-7 text-white bg-black rounded-full c-timeline-slider top-4 left-4 w-[330px]">
                     <button
                       className="w-6 pt-2.5"
                       type="button"
@@ -339,9 +339,9 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       {!delay && <Icon icon={PLAY_SVG} className="w-6 h-6" />}
                       {delay && <Icon icon={PAUSE_SVG} className="w-5 h-6" />}
                     </button>
-                    <div className="flex flex-col space-y-3 w-[230px]">
+                    <div className="flex flex-col space-y-3 w-[260px]">
                       <input
-                        className="w-full h-px bg-white rounded-lg appearance-none cursor-pointer"
+                        className="w-full h-px bg-transparent rounded-lg appearance-none cursor-pointer"
                         type="range"
                         id="tickmarks"
                         min={2017}
@@ -352,10 +352,11 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                           setFrame(+e.target.value - 2017);
                         }}
                       />
+                      <div className="w-[206px] absolute pointer-events-none right-[41px] top-2 h-px bg-white" />
 
                       <datalist
                         id="tickmarks"
-                        className="pointer-events-none absolute z-20 flex space-x-[31px]  text-white top-[6px] right-[30px]"
+                        className="pointer-events-none absolute z-20 flex space-x-[29.5px] text-white top-[6px] right-[26px]"
                       >
                         {YEARS.map((y) => {
                           return (
