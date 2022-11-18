@@ -463,7 +463,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       <LegendItem
                         icon={null}
                         id="satellite-layer"
-                        name="Satellite"
+                        name="Sentinel RGB Composites"
                         checkbox
                         checked={!!satelliteOpacity}
                         onCheck={(e) => {
@@ -488,7 +488,7 @@ Kigali.args = {
   className: '',
   viewport: {},
   initialViewState: {
-    bounds: [29.909188, -2.038595, 30.378167, -1.792914],
+    bounds: [29.777858860320976, -2.134462429567364, 30.561031213448075, -1.7231838096684982],
     fitBoundsOptions: {
       padding: 50,
     },

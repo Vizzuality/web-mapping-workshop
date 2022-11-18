@@ -300,7 +300,6 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         ],
                       }}
                     />
-
                     <Layer
                       id="bii-change"
                       type="raster"
@@ -466,7 +465,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                     <LegendItem
                       icon={null}
                       id="satellite-layer"
-                      name="Satellite"
+                      name="Sentinel RGB Composites"
                       checkbox
                       checked={!!satelliteOpacity}
                       onCheck={(e) => {
@@ -490,7 +489,7 @@ Tsaratanana.args = {
   className: '',
   viewport: {},
   initialViewState: {
-    bounds: [48.494319, -14.0634, 48.967417, -13.834493],
+    bounds: [48.50105238726496, -14.073777400558527, 49.086725817272765, -13.75166645387985],
     fitBoundsOptions: {
       padding: 50,
     },

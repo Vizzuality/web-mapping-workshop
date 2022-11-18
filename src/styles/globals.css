@@ -28,10 +28,11 @@
   }
 
   .c-timeline-slider input[type='range']::-webkit-slider-thumb {
-    background-color: transparent;
+    background-color: red;
+    padding-right: 10px;
     height: 53px;
     margin-top: 10px;
-    width: 18px;
+    width: 48px;
     -webkit-appearance: none;
   }
 
