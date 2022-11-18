@@ -391,7 +391,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                     <LegendItem
                       description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
                       icon={null}
-                      id="gradient-example-1"
+                      id="bii-tsaratanana-layer"
                       name="BII - 2017-2020"
                       checkbox
                       checked={!!biiOpacity}
@@ -403,28 +403,24 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         className="text-sm text-gray-300"
                         items={[
                           {
-                            color: '#5E8C5B',
-                            value: '0',
+                            color: 'rgba(225,239,224,255)',
+                            value: '0.8',
                           },
                           {
-                            color: null,
-                            value: '20',
+                            color: 'rgba(193,215,191,255)',
+                            value: '0.85',
                           },
                           {
-                            color: null,
-                            value: '40',
+                            color: 'rgba(160,190,158,255)',
+                            value: '0.9',
                           },
                           {
-                            color: null,
-                            value: '60',
+                            color: 'rgba(127,165,124,255)',
+                            value: '0.95',
                           },
                           {
-                            color: null,
-                            value: '80',
-                          },
-                          {
-                            color: '#B6D3B5',
-                            value: '100',
+                            color: 'rgba(94,140,91,255)',
+                            value: '1',
                           },
                         ]}
                       />
@@ -433,7 +429,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                     <LegendItem
                       description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
                       icon={null}
-                      id="gradient-example-1"
+                      id="bii-change-tsaratanana-layer"
                       name="BII Change - 2017-2020"
                       checkbox
                       checked={!!biiChangeOpacity}
@@ -445,32 +441,24 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         className="text-sm text-gray-300"
                         items={[
                           {
-                            color: '#E79F5F',
+                            color: 'rgba(231,159,95,255)',
+                            value: '-0.15',
+                          },
+                          {
+                            color: 'rgba(236,178,119,128)',
+                            value: '-0.075',
+                          },
+                          {
+                            color: 'rgba(241,196,143,0)',
                             value: '0',
                           },
                           {
-                            color: null,
-                            value: '20',
+                            color: 'rgba(192,186,192,128)',
+                            value: '0.075',
                           },
                           {
-                            color: null,
-                            value: '40',
-                          },
-                          {
-                            color: '#F1C48F',
-                            value: null,
-                          },
-                          {
-                            color: null,
-                            value: '60',
-                          },
-                          {
-                            color: null,
-                            value: '80',
-                          },
-                          {
-                            color: '#8FB0F1',
-                            value: '100',
+                            color: 'rgba(143,176,241,255)',
+                            value: '0.15',
                           },
                         ]}
                       />
