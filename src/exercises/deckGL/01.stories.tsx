@@ -45,6 +45,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
   const [biiOpacity, setBiiOpacity] = useState(1);
   const [biiChangeOpacity, setHumanFootprintOpacity] = useState(0);
+  const [satelliteOpacity, setSatelliteOpacity] = useState(1);
 
   const [frame, setFrame] = useState(0);
   const [delay, setDelay] = useState(null);
@@ -86,7 +87,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         },
         tileSize: 256,
         visible: true,
-        opacity: 1,
+        opacity: satelliteOpacity,
         refinementStrategy: 'no-overlap',
         renderSubLayers: (sl) => {
           if (!sl) return null;
@@ -128,7 +129,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         extent: initialViewState.bounds,
       }),
     ];
-  }, [frame, initialViewState.bounds]);
+  }, [frame, initialViewState.bounds, satelliteOpacity]);
 
   const BII_ANIMATED_DECK_LAYER = useMemo(() => {
     return [
@@ -474,6 +475,16 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         ]}
                       />
                     </LegendItem>
+                    <LegendItem
+                      icon={null}
+                      id="satellite-layer"
+                      name="Satellite"
+                      checkbox
+                      checked={!!satelliteOpacity}
+                      onCheck={(e) => {
+                        setSatelliteOpacity(e.target.checked ? 1 : 0);
+                      }}
+                    />
                   </Legend>
                 </>
               )}
