@@ -249,6 +249,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
               initialViewState={initialViewState}
               viewState={viewState}
               mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
+              logoPosition="bottom-right"
               onMapViewStateChange={(v) => {
                 setViewState(v);
               }}
