@@ -14,9 +14,12 @@ export const LegendTypeGradient: FC<LegendTypeGradientProps> = ({
     })}
   >
     <div
-      className="flex w-full h-2"
+      className="flex w-full h-4"
       style={{
-        backgroundImage: `linear-gradient(to right, ${items.map((i) => i.color).join(',')})`,
+        backgroundImage: `linear-gradient(to right, ${items
+          .filter((i) => i.color !== null)
+          .map((i) => i.color)
+          .join(',')})`,
       }}
     />
 
@@ -24,7 +27,7 @@ export const LegendTypeGradient: FC<LegendTypeGradientProps> = ({
       {items
         .filter(({ value }) => !!value)
         .map(({ value }) => (
-          <li key={`${value}`} className="shrink-0 text-xs">
+          <li key={`${value}`} className="text-xs shrink-0">
             {value}
           </li>
         ))}
