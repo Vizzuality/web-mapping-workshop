@@ -61,7 +61,10 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         },
 
         getTileData: (tile) => {
-          const { x, y, z, signal } = tile;
+          const {
+            index: { x, y, z },
+            signal,
+          } = tile;
           const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana2/APNGs/Sentinel/${z}/${x}/${y}.png`;
           const response = fetch(url, { signal });
 
@@ -142,7 +145,10 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         },
 
         getTileData: (tile) => {
-          const { x, y, z, signal } = tile;
+          const {
+            index: { x, y, z },
+            signal,
+          } = tile;
           const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Tsaratanana/BII/APNGs/${z}/${x}/${y}.png`;
           const response = fetch(url, { signal });
 
