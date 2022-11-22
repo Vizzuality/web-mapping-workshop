@@ -61,7 +61,10 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         },
 
         getTileData: (tile) => {
-          const { x, y, z, signal } = tile;
+          const {
+            index: { x, y, z },
+            signal,
+          } = tile;
           const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Kigali/APNGs/Sentinel/${z}/${x}/${y}.png`;
           const response = fetch(url, { signal });
 
@@ -142,7 +145,10 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         },
 
         getTileData: (tile) => {
-          const { x, y, z, signal } = tile;
+          const {
+            index: { x, y, z },
+            signal,
+          } = tile;
           const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Kigali/BII/APNGs/${z}/${x}/${y}.png`;
           const response = fetch(url, { signal });
 
@@ -239,7 +245,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   ];
 
   return (
-    <div className="relative w-full scale-x-[102.2%] scale-y-[103.5%] h-full bg-[url('/images/kigali-background.png')] bg-no-repeat">
+    <div className="relative w-[calc(100%_+_32px)] h-screen bg-[url('/images/kigali-background.png')] bg-no-repeat -m-4">
       <div className="max-w-[1630px] mx-auto px-4 md:px-12 xl:px-24">
         <div className="m-20 h-[700px] border-[30px] rounded-3xl border-black bg-black">
           <div className="relative w-full h-full overflow-hidden rounded-2xl">
@@ -248,6 +254,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
               initialViewState={initialViewState}
               viewState={viewState}
               mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
+              logoPosition="bottom-right"
               onMapViewStateChange={(v) => {
                 setViewState(v);
               }}

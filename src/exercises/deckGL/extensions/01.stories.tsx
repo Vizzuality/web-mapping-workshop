@@ -1,5 +1,10 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
+import { TileLayer } from '@deck.gl/geo-layers';
+import { BitmapLayer } from '@deck.gl/layers';
+import { MapboxLayer } from '@deck.gl/mapbox';
+import GL from '@luma.gl/constants';
+//
 import { Story } from '@storybook/react/types-6-0';
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
 import { Layer, LayerManager } from '@vizzuality/layer-manager-react';
@@ -8,9 +13,10 @@ import Map from 'components/map';
 import Controls from 'components/map/controls';
 import ZoomControl from 'components/map/controls/zoom';
 import { CustomMapProps } from 'components/map/types';
+import TestExtension from 'extensions/test';
 
 const StoryMap = {
-  title: 'Exercises/Raster Tiles',
+  title: 'Exercises/DeckGL/Extensions',
   component: Map,
   argTypes: {},
 };
@@ -22,28 +28,47 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
   const [viewState, setViewState] = useState(initialViewState);
 
-  const RASTER_LAYER = {
-    id: 'gain',
-    name: 'Tree cover gain',
-    type: 'raster',
-    source: {
-      type: 'raster',
-      tileSize: 256,
-      tiles: ['https://earthengine.google.org/static/hansen_2013/gain_alpha/{z}/{x}/{y}.png'],
-      minzoom: 3,
-      maxzoom: 12,
-    },
-    render: {
-      layers: [
-        {
-          type: 'raster',
-          paint: {
-            'raster-saturation': 1,
-          },
+  const RASTER_DECODED_LAYER = useMemo(() => {
+    return [
+      new MapboxLayer({
+        id: 'deck-test-extension-layer',
+        type: TileLayer,
+        data: 'https://earthengine.google.org/static/hansen_2013/gain_alpha/{z}/{x}/{y}.png',
+        tileSize: 256,
+        visible: true,
+        opacity: 1,
+        renderSubLayers: (sl) => {
+          const { id: subLayerId, data, tile, visible, opacity: o } = sl;
+
+          const {
+            z,
+            bbox: { west, south, east, north },
+          } = tile;
+
+          if (data) {
+            return new BitmapLayer({
+              id: subLayerId,
+              image: data,
+              bounds: [west, south, east, north],
+              textureParameters: {
+                [GL.TEXTURE_MIN_FILTER]: GL.NEAREST,
+                [GL.TEXTURE_MAG_FILTER]: GL.NEAREST,
+                [GL.TEXTURE_WRAP_S]: GL.CLAMP_TO_EDGE,
+                [GL.TEXTURE_WRAP_T]: GL.CLAMP_TO_EDGE,
+              },
+              zoom: z,
+              visible,
+              opacity: o,
+              extensions: [new TestExtension()],
+            });
+          }
+          return null;
         },
-      ],
-    },
-  };
+        minZoom: 3,
+        maxZoom: 12,
+      }),
+    ];
+  }, []);
 
   return (
     <>
@@ -67,7 +92,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
             return (
               <>
                 <LayerManager map={map} plugin={PluginMapboxGl}>
-                  <Layer key={RASTER_LAYER.id} {...RASTER_LAYER} />
+                  <Layer id="deck-test-extension-layer" type="deck" deck={RASTER_DECODED_LAYER} />
                 </LayerManager>
                 <Controls>
                   <ZoomControl id={id} />
@@ -81,8 +106,8 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   );
 };
 
-export const Raster01 = Template.bind({});
-Raster01.args = {
+export const Extensions01 = Template.bind({});
+Extensions01.args = {
   id: 'raster',
   className: '',
   viewport: {},
