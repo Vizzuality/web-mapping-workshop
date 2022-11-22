@@ -69,6 +69,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
               opacity: o,
               uMouseLng,
               uMouseLat,
+              uRadius: 50000,
               extensions: [new HighlightExtension()],
             });
           }
@@ -98,6 +99,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         <Map
           id={id}
           bounds={bounds}
+          initialViewState={initialViewState}
           viewState={viewState}
           mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
           onMapViewStateChange={(v) => {
@@ -128,7 +130,12 @@ Extensions02.args = {
   id: 'raster',
   className: '',
   viewport: {},
-  initialViewState: {},
+  initialViewState: {
+    bounds: [-13.392736, 35.469583, 7.701014, 43.460862],
+    fitBoundsOptions: {
+      padding: 50,
+    },
+  },
   onMapViewportChange: (viewport) => {
     console.info('onMapViewportChange: ', viewport);
   },
