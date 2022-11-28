@@ -498,9 +498,7 @@ Tsaratanana.args = {
   viewport: {},
   initialViewState: {
     bounds: [48.50105238726496, -14.073777400558527, 49.086725817272765, -13.75166645387985],
-    fitBoundsOptions: {
-      padding: 50,
-    },
+    fitBoundsOptions: {},
   },
   onMapViewportChange: (viewport) => {
     console.info('onMapViewportChange: ', viewport);

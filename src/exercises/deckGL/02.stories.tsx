@@ -497,9 +497,7 @@ Kigali.args = {
   viewport: {},
   initialViewState: {
     bounds: [29.777858860320976, -2.134462429567364, 30.561031213448075, -1.7231838096684982],
-    fitBoundsOptions: {
-      padding: 50,
-    },
+    fitBoundsOptions: {},
   },
   onMapViewportChange: (viewport) => {
     console.info('onMapViewportChange: ', viewport);
