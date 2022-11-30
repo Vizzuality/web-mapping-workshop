@@ -5,6 +5,7 @@ module.exports = {
   stories: [
     '../src/components/**/*.stories.@(js|jsx|ts|tsx)',
     '../src/exercises/**/*.stories.@(js|jsx|ts|tsx)',
+    '../src/playground/**/*.stories.@(js|jsx|ts|tsx)',
   ],
   staticDirs: ['../public'],
   addons: [
