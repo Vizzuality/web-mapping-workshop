@@ -45,94 +45,9 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
   const [biiOpacity, setBiiOpacity] = useState(1);
   const [biiChangeOpacity, setHumanFootprintOpacity] = useState(0);
-  const [satelliteOpacity, setSatelliteOpacity] = useState(1);
 
   const [frame, setFrame] = useState(0);
   const [delay, setDelay] = useState(null);
-
-  const SATELLITE_DECK_LAYER = useMemo(() => {
-    return [
-      new MapboxLayer({
-        id: `prediction-animated`,
-        type: TileLayer,
-        frame,
-        getPolygonOffset: () => {
-          return [0, -50];
-        },
-
-        getTileData: (tile) => {
-          const {
-            index: { x, y, z },
-            signal,
-          } = tile;
-          const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Kigali/APNGs/Sentinel/${z}/${x}/${y}.png`;
-          const response = fetch(url, { signal });
-
-          if (signal.aborted) {
-            return null;
-          }
-
-          return response
-            .then((res) => res.arrayBuffer())
-            .then((buffer) => {
-              const apng = parseAPNG(buffer);
-              if (apng instanceof Error) {
-                throw apng;
-              }
-
-              return apng.frames.map((f) => {
-                return {
-                  ...f,
-                  bitmapData: createImageBitmap(f.imageData),
-                };
-              });
-            });
-        },
-        tileSize: 256,
-        visible: true,
-        opacity: satelliteOpacity,
-        refinementStrategy: 'no-overlap',
-        renderSubLayers: (sl) => {
-          if (!sl) return null;
-
-          const { id: subLayerId, data, tile, visible, opacity = 1, frame: f } = sl;
-
-          if (!tile || !data) return null;
-
-          const {
-            z,
-            bbox: { west, south, east, north },
-          } = tile;
-
-          const FRAME = data[f];
-
-          if (FRAME) {
-            return new BitmapLayer({
-              id: subLayerId,
-              image: FRAME.bitmapData,
-              bounds: [west, south, east, north],
-              getPolygonOffset: () => {
-                return [0, -50];
-              },
-              textureParameters: {
-                [GL.TEXTURE_MIN_FILTER]: GL.NEAREST,
-                [GL.TEXTURE_MAG_FILTER]: GL.NEAREST,
-                [GL.TEXTURE_WRAP_S]: GL.CLAMP_TO_EDGE,
-                [GL.TEXTURE_WRAP_T]: GL.CLAMP_TO_EDGE,
-              },
-              zoom: z,
-              visible,
-              opacity,
-            });
-          }
-          return null;
-        },
-        minZoom: 10,
-        maxZoom: 14,
-        extent: initialViewState.bounds,
-      }),
-    ];
-  }, [frame, initialViewState.bounds, satelliteOpacity]);
 
   const BII_ANIMATED_DECK_LAYER = useMemo(() => {
     return [
@@ -149,7 +64,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
             index: { x, y, z },
             signal,
           } = tile;
-          const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Kigali/BII/APNGs/${z}/${x}/${y}.png`;
+          const url = `https://storage.googleapis.com/geo-ai/Redes/Tiles/Pampas/BII/APNGs/${z}/${x}/${y}.png`;
           const response = fetch(url, { signal });
 
           if (signal.aborted) {
@@ -313,7 +228,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         source={{
                           type: 'raster',
                           tiles: [
-                            'https://storage.googleapis.com/geo-ai/Redes/Tiles/Kigali/BII/{z}/{x}/{y}.png',
+                            'https://storage.googleapis.com/geo-ai/Redes/Tiles/Pampas/BII/{z}/{x}/{y}.png',
                           ],
                         }}
                         opacity={biiChangeOpacity}
@@ -324,13 +239,6 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         source={{ parse: false }}
                         render={{ parse: false }}
                         deck={BII_ANIMATED_DECK_LAYER}
-                      />
-                      <Layer
-                        id="satellite-deck-layer"
-                        type="deck"
-                        source={{ parse: false }}
-                        render={{ parse: false }}
-                        deck={SATELLITE_DECK_LAYER}
                       />
                     </LayerManager>
                     {/* Timeline */}
@@ -395,9 +303,8 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       sortable={false}
                     >
                       <LegendItem
-                        description=""
                         icon={null}
-                        id="bii-kigali-layer"
+                        id="bii-pampas-layer"
                         name="BII - 2017-2020"
                         checkbox
                         checked={!!biiOpacity}
@@ -432,9 +339,8 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         />
                       </LegendItem>
                       <LegendItem
-                        description=""
                         icon={null}
-                        id="bii-change-kigali-layer"
+                        id="bii-change-pampas-layer"
                         name="BII Change - 2017-2020"
                         checkbox
                         checked={!!biiChangeOpacity}
@@ -468,16 +374,6 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                           ]}
                         />
                       </LegendItem>
-                      <LegendItem
-                        icon={null}
-                        id="satellite-layer"
-                        name="Sentinel RGB Composites"
-                        checkbox
-                        checked={!!satelliteOpacity}
-                        onCheck={(e) => {
-                          setSatelliteOpacity(e.target.checked ? 1 : 0);
-                        }}
-                      />
                     </Legend>
                   </>
                 );
@@ -490,13 +386,13 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   );
 };
 
-export const Kigali = Template.bind({});
-Kigali.args = {
-  id: 'kigali-layer',
+export const Pampas = Template.bind({});
+Pampas.args = {
+  id: 'pampas-layer',
   className: '',
   viewport: {},
   initialViewState: {
-    bounds: [29.777858860320976, -2.134462429567364, 30.561031213448075, -1.7231838096684982],
+    bounds: [-63.57498332629916, -37.03409453517231, -56.669864548712894, -34.07788115378084],
     fitBoundsOptions: {},
   },
   onMapViewportChange: (viewport) => {
