@@ -2,24 +2,21 @@ import { useMemo } from 'react';
 
 import { Marker } from 'react-map-gl';
 
-import { BBox } from 'geojson';
 import Supercluster from 'supercluster';
 
 import type { ClusterLayerProps } from './types';
 
 export const ClusterLayer = ({
-  data,
-  map,
+  dataFeatures,
+  zoom,
+  bbox,
   MarkerComponent,
   ClusterComponent,
   onSelectMarker,
 }: ClusterLayerProps) => {
-  const bbox = map.getBounds().toArray().flat() as BBox;
-  const zoom = map.getZoom();
-
   const SUPERCLUSTER: Supercluster = useMemo(
-    () => new Supercluster({ radius: 40 }).load(data?.features),
-    [data?.features]
+    () => new Supercluster({ radius: 40 }).load(dataFeatures),
+    [dataFeatures]
   );
 
   const clusters = useMemo(() => {
@@ -27,6 +24,11 @@ export const ClusterLayer = ({
 
     return SUPERCLUSTER.getClusters(bbox, zoom);
   }, [SUPERCLUSTER, bbox, zoom]);
+
+  const handleSelectMarker = (clusterId: number, coordinates: number[]) => {
+    const nextZoom = SUPERCLUSTER.getClusterExpansionZoom(clusterId);
+    onSelectMarker(nextZoom, coordinates);
+  };
 
   return (
     <>
@@ -51,25 +53,17 @@ export const ClusterLayer = ({
               key={id}
               latitude={latitude}
               longitude={longitude}
-              onClick={() => onSelectMarker(properties)}
+              onClick={() => handleSelectMarker(clusterId, coordinates)}
             >
-              <ClusterComponent
-                properties={properties as Supercluster.ClusterProperties}
-                leaves={leaves}
-              />
+              <ClusterComponent properties={clusterFeaturesProps} leaves={leaves} />
             </Marker>
           );
         }
 
         // If is not a cluster, it's a PointFeature, so the properties will be the FeatureProps
         return (
-          <Marker
-            key={id}
-            latitude={latitude}
-            longitude={longitude}
-            onClick={() => onSelectMarker(properties)}
-          >
-            <MarkerComponent properties={feature} />
+          <Marker key={id} latitude={latitude} longitude={longitude}>
+            <MarkerComponent properties={properties} />
           </Marker>
         );
       })}

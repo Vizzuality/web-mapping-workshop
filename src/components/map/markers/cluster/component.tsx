@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { PieChart, Pie, Cell, Tooltip, Label } from 'recharts';
+import { PieChart, Pie, Cell, Label } from 'recharts';
 
 import { ClusterComponentProps } from 'components/map/layers/clusters/types';
 
@@ -10,7 +10,7 @@ export const MapCluster = ({ leaves, properties }: ClusterComponentProps) => {
   const { point_count: pointCount } = properties;
 
   const data = useMemo(() => {
-    return leaves.reduce((prev: { name: string; value: number }[], { type }) => {
+    return leaves.reduce((prev: { name: string; value: number }[], { properties: { type } }) => {
       const hasType = prev.findIndex((item) => item.name === type);
       if (hasType >= 0) {
         const result = [...prev];
@@ -29,7 +29,6 @@ export const MapCluster = ({ leaves, properties }: ClusterComponentProps) => {
         ))}
         <Label position="center">{pointCount}</Label>
       </Pie>
-      <Tooltip />
     </PieChart>
   );
 };
