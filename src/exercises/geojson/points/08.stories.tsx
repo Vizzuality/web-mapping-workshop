@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ViewState } from 'react-map-gl';
 
 import { Story } from '@storybook/react/types-6-0';
-import { FeatureCollection, Point } from 'geojson';
+import Supercluster from 'supercluster';
 
 import Map from 'components/map';
 import Controls from 'components/map/controls';
@@ -14,22 +14,6 @@ import MarkerPin from 'components/map/markers/pin';
 import { CustomMapProps } from 'components/map/types';
 import AIRPORTS_DATA from 'data/airports.json';
 
-export type AirportDataProperties = {
-  scalerank: number;
-  featurecla: string;
-  type: string;
-  name: string;
-  abbrev?: string;
-  location: string;
-  gps_code?: string;
-  iata_code?: string;
-  wikipedia?: string;
-  natlscale: number;
-  cartodb_id: number;
-  created_at: string;
-  updated_at?: string;
-};
-
 const StoryMap = {
   title: 'Exercises/Geojson/Points',
   component: Map,
@@ -39,13 +23,15 @@ const StoryMap = {
 export default StoryMap;
 
 const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
-  const { id, bounds, initialViewState } = args;
+  const { id, initialViewState } = args;
 
-  const [viewState, setViewState] = useState<Partial<ViewState>>();
+  const [viewState, setViewState] = useState<Partial<ViewState>>({ zoom: 0 });
 
-  const onSelectMarker = (props: AirportDataProperties) => {
-    //  do something with marker
-    console.log(props);
+  const dataFeatures = AIRPORTS_DATA.features as Supercluster.PointFeature<Supercluster.AnyProps>[];
+
+  const onSelectMarker = (nextZoom: number, coordinates: number[]) => {
+    const [longitude, latitude] = coordinates;
+    setViewState({ ...viewState, longitude, latitude, zoom: nextZoom });
   };
 
   return (
@@ -67,7 +53,6 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
       </div>
       <Map
         id={id}
-        bounds={bounds}
         initialViewState={initialViewState}
         viewState={viewState}
         mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
@@ -76,11 +61,14 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         }}
       >
         {(map) => {
+          const bbox = map.getBounds().toArray().flat() as [number, number, number, number];
           return (
             <>
               <ClusterLayer
-                data={AIRPORTS_DATA as FeatureCollection<Point, AirportDataProperties>}
+                dataFeatures={dataFeatures}
                 map={map}
+                zoom={viewState.zoom}
+                bbox={bbox}
                 MarkerComponent={MarkerPin}
                 ClusterComponent={MarkerCluster}
                 onSelectMarker={onSelectMarker}

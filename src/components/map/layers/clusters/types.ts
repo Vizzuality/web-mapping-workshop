@@ -1,22 +1,23 @@
 import React from 'react';
 
-import { FeatureCollection, Point } from 'geojson';
 import { Map } from 'mapbox-gl';
-import Supercluster, { ClusterProperties } from 'supercluster';
+import Supercluster from 'supercluster';
 
 export type PinComponentProps = {
   properties: Supercluster.AnyProps;
 };
 
 export type ClusterComponentProps = {
-  properties: ClusterProperties;
+  properties: Supercluster.ClusterProperties;
   leaves: Supercluster.PointFeature<Supercluster.AnyProps>[];
 };
 
 export type ClusterLayerProps = {
-  data: FeatureCollection<Point>;
+  dataFeatures: Supercluster.PointFeature<Supercluster.AnyProps>[];
   map: Map;
+  bbox: [number, number, number, number];
+  zoom: number;
   MarkerComponent: React.FC<PinComponentProps>;
   ClusterComponent: React.FC<ClusterComponentProps>;
-  onSelectMarker: (properties: Supercluster.AnyProps | ClusterProperties) => void;
+  onSelectMarker: (nextZoom: number, coordinates: number[]) => void;
 };
