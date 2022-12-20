@@ -395,7 +395,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                       sortable={false}
                     >
                       <LegendItem
-                        description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                        description=""
                         icon={null}
                         id="bii-kigali-layer"
                         name="BII - 2017-2020"
@@ -432,7 +432,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         />
                       </LegendItem>
                       <LegendItem
-                        description="Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                        description=""
                         icon={null}
                         id="bii-change-kigali-layer"
                         name="BII Change - 2017-2020"
