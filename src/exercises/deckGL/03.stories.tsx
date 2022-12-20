@@ -393,7 +393,9 @@ Pampas.args = {
   viewport: {},
   initialViewState: {
     bounds: [-63.57498332629916, -37.03409453517231, -56.669864548712894, -34.07788115378084],
-    fitBoundsOptions: {},
+    fitBoundsOptions: {
+      padding: -50,
+    },
   },
   onMapViewportChange: (viewport) => {
     console.info('onMapViewportChange: ', viewport);
