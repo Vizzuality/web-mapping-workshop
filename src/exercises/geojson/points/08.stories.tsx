@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
-import { ViewState } from 'react-map-gl';
+import { MapRef, ViewState } from 'react-map-gl';
 
 import { Story } from '@storybook/react/types-6-0';
 import Supercluster from 'supercluster';
@@ -25,13 +25,14 @@ export default StoryMap;
 const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   const { id, initialViewState } = args;
 
+  const mapRef = useRef<MapRef>();
+
   const [viewState, setViewState] = useState<Partial<ViewState>>({ zoom: 0 });
 
-  const dataFeatures = AIRPORTS_DATA.features as Supercluster.PointFeature<Supercluster.AnyProps>[];
+  const DATA = AIRPORTS_DATA.features as Supercluster.PointFeature<Supercluster.AnyProps>[];
 
-  const onSelectMarker = (nextZoom: number, coordinates: number[]) => {
-    const [longitude, latitude] = coordinates;
-    setViewState({ ...viewState, longitude, latitude, zoom: nextZoom });
+  const onSelectMarker = (nextZoom: number, coordinates: [number, number]) => {
+    mapRef.current?.flyTo({ zoom: nextZoom, center: coordinates });
   };
 
   return (
@@ -56,19 +57,19 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         initialViewState={initialViewState}
         viewState={viewState}
         mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
+        onMapLoad={({ map }) => {
+          mapRef.current = map;
+        }}
         onMapViewStateChange={(v) => {
           setViewState(v);
         }}
       >
-        {(map) => {
-          const bbox = map.getBounds().toArray().flat() as [number, number, number, number];
+        {() => {
           return (
             <>
               <ClusterLayer
-                dataFeatures={dataFeatures}
-                map={map}
-                zoom={viewState.zoom}
-                bbox={bbox}
+                mapId={id}
+                data={DATA}
                 MarkerComponent={MarkerPin}
                 ClusterComponent={MarkerCluster}
                 onSelectMarker={onSelectMarker}

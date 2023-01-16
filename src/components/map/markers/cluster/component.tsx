@@ -23,7 +23,14 @@ export const MapCluster = ({ leaves, properties }: ClusterComponentProps) => {
 
   return (
     <PieChart width={40} height={40}>
-      <Pie data={data} innerRadius={10} outerRadius={15} fillOpacity={0.6} dataKey="value">
+      <Pie
+        data={data}
+        innerRadius={10}
+        outerRadius={15}
+        fillOpacity={0.6}
+        dataKey="value"
+        isAnimationActive={false}
+      >
         {data.map(({ name }) => (
           <Cell key={`cell-${name}`} fill={getColor(name)} />
         ))}

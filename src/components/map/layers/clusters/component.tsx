@@ -1,22 +1,25 @@
 import { useMemo } from 'react';
 
-import { Marker } from 'react-map-gl';
+import { Marker, useMap } from 'react-map-gl';
 
 import Supercluster from 'supercluster';
 
 import type { ClusterLayerProps } from './types';
 
 export const ClusterLayer = ({
-  dataFeatures,
-  zoom,
-  bbox,
+  mapId,
+  data,
   MarkerComponent,
   ClusterComponent,
   onSelectMarker,
 }: ClusterLayerProps) => {
+  const { [mapId]: mapRef } = useMap();
+  const bbox = mapRef.getBounds().toArray().flat() as [number, number, number, number];
+  const zoom = mapRef.getZoom();
+
   const SUPERCLUSTER: Supercluster = useMemo(
-    () => new Supercluster({ radius: 40 }).load(dataFeatures),
-    [dataFeatures]
+    () => new Supercluster({ radius: 40 }).load(data),
+    [data]
   );
 
   const clusters = useMemo(() => {
@@ -36,6 +39,7 @@ export const ClusterLayer = ({
         const { id, geometry, properties } = feature;
         const { coordinates } = geometry;
         const [longitude, latitude] = coordinates;
+
         // The feature can be a cluster or a point.
         // If is a cluster (properties.cluster = true):
         // properties = {
@@ -45,6 +49,7 @@ export const ClusterLayer = ({
         //   point_count_abbreviated: number
         // }
         const clusterFeaturesProps = feature.properties as Supercluster.ClusterProperties;
+
         if (clusterFeaturesProps.cluster) {
           const { cluster_id: clusterId } = clusterFeaturesProps;
           const leaves = SUPERCLUSTER.getLeaves(clusterId, Infinity);
@@ -61,9 +66,10 @@ export const ClusterLayer = ({
         }
 
         // If is not a cluster, it's a PointFeature, so the properties will be the FeatureProps
+        // Be sure that the id you use in the key is unique, otherwise you will get rerender blinking
         return (
-          <Marker key={id} latitude={latitude} longitude={longitude}>
-            <MarkerComponent properties={properties} />
+          <Marker key={properties.cartodb_id} latitude={latitude} longitude={longitude}>
+            <MarkerComponent key={`marker-${properties.cartodb_id}`} properties={properties} />
           </Marker>
         );
       })}
