@@ -41,18 +41,25 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
           paint: {
             'fill-color': [
               'case',
-              ['<', ['get', 'population'], 300000],
+              ['>', ['get', 'population'], 2000000],
               '#1C5183',
               ['all', ['>=', ['get', 'population'], 2], ['<', ['get', 'population'], 300000]],
-              '#e7b092',
-              '#e7b092',
+              '#6D7789',
+              '#E7B092',
             ],
           },
         },
         {
           type: 'line',
           paint: {
-            'line-color': '#efc999',
+            'line-color': [
+              'case',
+              ['>', ['get', 'population'], 2000000],
+              '#E7B092',
+              ['all', ['>=', ['get', 'population'], 2], ['<', ['get', 'population'], 300000]],
+              '#1C5183',
+              '#6D7789',
+            ],
             'line-width': 0.8,
             'line-opacity': 0.5,
           },
@@ -83,13 +90,18 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
           <i>Note: This map is for learning purposes, data may not be accurate with reality</i>
         </p>
         <Code>
-          {`colors = [{ id: '1', color: '#0080FF' },{ id: '2', color: '#45B922' },{ id: '3', color: '#2E97D0' },{ id: '4', color: '#E7F317' },{ id: '5', color: '#5CAEA2' },{ id: '6', color: '#FFF300' },{ id: '7', color: '#5CA2A2' },{ id: '8', color: '#FFDC00' },{ id: '9', color: '#FFD000' },{ id: '10', color: '#FF0000' },{ id: '11', color: '#8B7345' },{ id: '12', color: '#FFAE00' },{ id: '13', color: '#2ED0D0' },{ id: '14', color: '#FF9700' },{ id: '15', color: '#738B3A' },{ id: '16', color: '#FF7000' },{ id: '17', color: '#FF5000' },{ id: '18', color: '#FF0080' }];
-border = '#000000';
-opacity = 0.5;
-&:hover : {
-  border = '#000000';
-  opacity = 1;
-}`}
+          {`
+          color = '#1C5183', // for population over 2000000
+          color = '#6D7789', // for population between 2 and 300000
+          color = '#E7B092', // for the rest of the cases
+     
+          border = '#E7B092', // for population over 2000000
+          border = '#1C5183', // for population between 2 and 300000
+          border = '#6D7789', // for the rest of the cases
+
+          opacity = 0.5, // border opacity
+          width = 0.8 // border width
+        `}
         </Code>
       </div>
 
