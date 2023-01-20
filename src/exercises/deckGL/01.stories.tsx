@@ -249,7 +249,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
     <div className="relative w-[calc(100%_+_32px)] h-screen bg-[url('/images/tsaratanana-background.png')] bg-no-repeat -m-4">
       <div className="max-w-[1630px] mx-auto px-4 md:px-12 xl:px-24">
         <div className="m-20 h-[600px] border-[30px] rounded-[46px] border-black bg-black">
-          <div className="relative w-full h-full overflow-hidden rounded-[2xl]">
+          <div className="relative w-full h-full overflow-hidden rounded-2xl">
             <Map
               id={id}
               initialViewState={initialViewState}
