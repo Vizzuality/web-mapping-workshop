@@ -1,0 +1,111 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "w4704750",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            40.353568027907556, -3.743908612962616
+          ],
+          [
+            40.355888040846956, -3.747193190153833
+          ]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "The Reuse Company",
+        "company2": "Otis",
+        "processes": "water",
+        "quantity": 300
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704751",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            40.353568027907556, -3.743908612962616
+          ],
+          [
+            40.355888040846956, -3.747193190153833
+          ]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "The Reuse Company",
+        "company2": "Otis",
+        "processes": "energy",
+        "quantity": 400
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704752",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            40.353568027907556, -3.743908612962616
+          ],
+          [
+            40.35518404776069, -3.7442592584049077
+          ]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "The Reuse Company",
+        "company2": "Impact Lab",
+        "processes": "energy",
+        "quantity": 800
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704754",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.35518404776069, -3.7442592584049077],
+          [40.36003368148235, -3.7419696128895836]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "Impact Lab",
+        "company2": "Solusoft",
+        "processes": "material",
+        "quantity": 1200
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704756",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            40.36003368148235, -3.7419696128895836
+          ],
+          [
+            40.36253474669809, -3.7431112900833745
+          ]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "Solusoft",
+        "company2": "Biofarma",
+        "processes": "energy",
+        "quantity": 720
+      }
+    }
+  ]
+}

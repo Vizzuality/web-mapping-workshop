@@ -1,0 +1,105 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "1",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.353568027907556, -3.743908612962616]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "name": "The Reuse Company",
+        "cif": 3457918263,
+        "sector": "Lorem ipsum",
+        "description": "Lorem ipsum",
+        "activity": "Lorem ipsum",
+        "size": "big",
+        "employee_number": 3500
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.355888040846956, -3.747193190153833]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "name": "Otis",
+        "cif": 3457918263,
+        "sector": "Lorem ipsum",
+        "description": "Lorem ipsum",
+        "activity": "Lorem ipsum",
+        "size": "big",
+        "employee_number": 1500
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "3",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.35518404776069, -3.7442592584049077]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "name": "Impact Lab",
+        "cif": 3457918263,
+        "sector": "Lorem ipsum",
+        "description": "Lorem ipsum",
+        "activity": "Lorem ipsum",
+        "size": "big",
+        "employee_number": 500
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "4",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.36003368148235, -3.7419696128895836]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "name": "Solusoft",
+        "cif": 3457918263,
+        "sector": "Lorem ipsum",
+        "description": "Lorem ipsum",
+        "activity": "Lorem ipsum",
+        "size": "big",
+        "employee_number": 1200
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "5",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.36253474669809, -3.7431112900833745]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "name": "Bidafarma",
+        "cif": 3457918263,
+        "sector": "Lorem ipsum",
+        "description": "Lorem ipsum",
+        "activity": "Lorem ipsum",
+        "size": "big",
+        "employee_number": 3500
+      }
+    }
+  ]
+}
