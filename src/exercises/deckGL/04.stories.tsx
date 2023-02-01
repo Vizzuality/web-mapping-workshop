@@ -2,14 +2,15 @@ import React, { useState, useMemo } from 'react';
 
 import { ViewState } from 'react-map-gl';
 
-import { COORDINATE_SYSTEM } from '@deck.gl/core';
-import { PointCloudLayer } from '@deck.gl/layers';
+import { ScatterplotLayer } from '@deck.gl/layers';
+import { MapboxLayer } from '@deck.gl/mapbox';
 import { Story } from '@storybook/react/types-6-0';
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
 import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
+import DATA from 'data/companies.json';
 
 const StoryMap = {
   title: 'Exercises/DeckGL/Paths',
@@ -23,16 +24,25 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   const { id, initialViewState } = args;
   const [viewState, setViewState] = useState<Partial<ViewState>>();
 
-  const COORDINATE_DECK_LAYER = useMemo(() => {
+  const COMPANIES_DECK_LAYER = useMemo(() => {
     return [
-      new PointCloudLayer({
-        coordinateSystem: COORDINATE_SYSTEM.METER_OFFSETS,
-        coordinateOrigin: [-122.4004935, 37.7900486, 0], // anchor point in longitude/latitude/altitude
-        data: [
-          { position: [40.355888040846956, -3.747193190153833, 1.455] }, // meter offsets from the coordinate origin
-        ],
-        radiusPixels: 2,
-        sizeUnits: 'pixels',
+      // siempre devolver mapbox layer solo si trabajamos con mapbox
+      new MapboxLayer({
+        id: 'scatterplot-layer',
+        type: ScatterplotLayer,
+        data: DATA.features,
+        pickable: true,
+        opacity: 0.8,
+        stroked: true,
+        filled: true,
+        radiusScale: 6,
+        radiusMinPixels: 1,
+        radiusMaxPixels: 100,
+        lineWidthMinPixels: 1,
+        getPosition: (d) => d.geometry.coordinates[0],
+        getRadius: () => 10,
+        getFillColor: () => [255, 140, 0], //vector 3
+        getLineColor: () => [0, 0, 0],
       }),
     ];
   }, []);
@@ -57,11 +67,11 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                   <>
                     <LayerManager map={map} plugin={PluginMapboxGl}>
                       <Layer
-                        id="coordinate-layer"
+                        id="scatterplot-layer"
                         type="deck"
                         source={{ parse: false }}
                         render={{ parse: false }}
-                        deck={COORDINATE_DECK_LAYER}
+                        deck={COMPANIES_DECK_LAYER}
                       />
                     </LayerManager>
                   </>
