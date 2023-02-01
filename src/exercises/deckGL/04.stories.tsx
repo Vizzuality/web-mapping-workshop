@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 
 import { ViewState } from 'react-map-gl';
 
-import { ScatterplotLayer } from '@deck.gl/layers';
+import { PathLayer, ScatterplotLayer } from '@deck.gl/layers';
 import { MapboxLayer } from '@deck.gl/mapbox';
 import { Story } from '@storybook/react/types-6-0';
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
@@ -10,7 +10,8 @@ import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
-import DATA from 'data/companies.json';
+import companiesData from 'data/companies.json';
+import processesData from 'data/processes.json';
 
 const StoryMap = {
   title: 'Exercises/DeckGL/Paths',
@@ -24,13 +25,25 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   const { id, initialViewState } = args;
   const [viewState, setViewState] = useState<Partial<ViewState>>();
 
+  const colorToRGBArray = (process) => {
+    if (process === 'energy') {
+      return [0, 147, 146];
+    } else if (process === 'water') {
+      return [57, 177, 133];
+    } else if (process === 'material') {
+      return [156, 203, 134];
+    } else {
+      return [207, 89, 126];
+    }
+  };
+
   const COMPANIES_DECK_LAYER = useMemo(() => {
     return [
       // siempre devolver mapbox layer solo si trabajamos con mapbox
       new MapboxLayer({
         id: 'scatterplot-layer',
         type: ScatterplotLayer,
-        data: DATA.features,
+        data: companiesData.features,
         pickable: true,
         opacity: 0.8,
         stroked: true,
@@ -43,6 +56,22 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         getRadius: () => 10,
         getFillColor: () => [255, 140, 0], //vector 3
         getLineColor: () => [0, 0, 0],
+      }),
+    ];
+  }, []);
+
+  const PROCESSES_DECK_LAYER = useMemo(() => {
+    return [
+      new MapboxLayer({
+        id: 'path-layer',
+        type: PathLayer,
+        data: processesData.features,
+        pickable: true,
+        widthScale: 20,
+        widthMinPixels: 20,
+        getPath: (d) => d.geometry.coordinates,
+        getColor: (d) => colorToRGBArray(d.properties.process),
+        getWidth: () => 5,
       }),
     ];
   }, []);
@@ -73,6 +102,13 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
                         render={{ parse: false }}
                         deck={COMPANIES_DECK_LAYER}
                       />
+                      <Layer
+                        id="path-layer"
+                        type="deck"
+                        source={{ parse: false }}
+                        render={{ parse: false }}
+                        deck={PROCESSES_DECK_LAYER}
+                      />
                     </LayerManager>
                   </>
                 );
@@ -91,7 +127,7 @@ Paths01.args = {
   className: '',
   viewport: {},
   initialViewState: {
-    bounds: [-3.797293, 40.316246, -3.737469, 40.341242],
+    bounds: [-3.757152, 40.348085, -3.727669, 40.360578],
     fitBoundsOptions: {
       padding: -50,
     },

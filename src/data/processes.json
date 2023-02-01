@@ -19,8 +19,9 @@
         "timestamp": 1603801704,
         "company1": "The Reuse Company",
         "company2": "Otis",
-        "processes": "water",
-        "quantity": 300
+        "process": "water",
+        "quantity": 300,
+        "color": [255, 0, 0]
       }
     },
     {
@@ -41,8 +42,9 @@
         "timestamp": 1603801704,
         "company1": "The Reuse Company",
         "company2": "Otis",
-        "processes": "energy",
-        "quantity": 400
+        "process": "energy",
+        "quantity": 400,
+        "color": [255, 0, 0]
       }
     },
     {
@@ -63,7 +65,7 @@
         "timestamp": 1603801704,
         "company1": "The Reuse Company",
         "company2": "Impact Lab",
-        "processes": "energy",
+        "process": "energy",
         "quantity": 800
       }
     },
@@ -81,8 +83,9 @@
         "timestamp": 1603801704,
         "company1": "Impact Lab",
         "company2": "Solusoft",
-        "processes": "material",
-        "quantity": 1200
+        "process": "material",
+        "quantity": 1200,
+        "color": 1
       }
     },
     {
@@ -103,8 +106,9 @@
         "timestamp": 1603801704,
         "company1": "Solusoft",
         "company2": "Biofarma",
-        "processes": "energy",
-        "quantity": 720
+        "process": "energy",
+        "quantity": 720,
+        "color": [255, 0, 0]
       }
     }
   ]
