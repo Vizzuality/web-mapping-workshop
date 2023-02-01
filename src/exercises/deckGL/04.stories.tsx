@@ -71,7 +71,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         widthMinPixels: 20,
         getPath: (d) => d.geometry.coordinates,
         getColor: (d) => colorToRGBArray(d.properties.process),
-        getWidth: () => 5,
+        getWidth: () => 1,
       }),
     ];
   }, []);
