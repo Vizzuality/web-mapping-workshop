@@ -39,7 +39,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
   const COMPANIES_DECK_LAYER = useMemo(() => {
     return [
-      // siempre devolver mapbox layer solo si trabajamos con mapbox
+      // Return Mapbox Layer when we work with Mapbox
       new MapboxLayer({
         id: 'scatterplot-layer',
         type: ScatterplotLayer,
@@ -53,7 +53,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         radiusMaxPixels: 100,
         lineWidthMinPixels: 1,
         getPosition: (d) => d.geometry.coordinates[0],
-        getRadius: () => 10,
+        getRadius: () => 5,
         getFillColor: () => [255, 140, 0], //vector 3
         getLineColor: () => [0, 0, 0],
       }),
@@ -77,57 +77,51 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   }, []);
 
   return (
-    <div className="relative w-[calc(100%_+_32px)] h-screen bg-[url('/images/pampas-background.png')] bg-no-repeat -m-4">
-      <div className="max-w-[1630px] mx-auto px-4 md:px-12 xl:px-24">
-        <div className="m-20 h-[600px] border-[30px] rounded-[46px] border-black bg-black">
-          <div className="relative w-full h-full overflow-hidden rounded-2xl">
-            <Map
-              id={id}
-              initialViewState={initialViewState}
-              viewState={viewState}
-              mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
-              logoPosition="bottom-right"
-              onMapViewStateChange={(v) => {
-                setViewState(v);
-              }}
-            >
-              {(map) => {
-                return (
-                  <>
-                    <LayerManager map={map} plugin={PluginMapboxGl}>
-                      <Layer
-                        id="scatterplot-layer"
-                        type="deck"
-                        source={{ parse: false }}
-                        render={{ parse: false }}
-                        deck={COMPANIES_DECK_LAYER}
-                      />
-                      <Layer
-                        id="path-layer"
-                        type="deck"
-                        source={{ parse: false }}
-                        render={{ parse: false }}
-                        deck={PROCESSES_DECK_LAYER}
-                      />
-                    </LayerManager>
-                  </>
-                );
-              }}
-            </Map>
-          </div>
-        </div>
-      </div>
+    <div className="w-screen h-screen ">
+      <Map
+        id={id}
+        initialViewState={initialViewState}
+        viewState={viewState}
+        mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
+        logoPosition="bottom-right"
+        onMapViewStateChange={(v) => {
+          setViewState(v);
+        }}
+      >
+        {(map) => {
+          return (
+            <>
+              <LayerManager map={map} plugin={PluginMapboxGl}>
+                <Layer
+                  id="scatterplot-layer"
+                  type="deck"
+                  source={{ parse: false }}
+                  render={{ parse: false }}
+                  deck={COMPANIES_DECK_LAYER}
+                />
+                <Layer
+                  id="path-layer"
+                  type="deck"
+                  source={{ parse: false }}
+                  render={{ parse: false }}
+                  deck={PROCESSES_DECK_LAYER}
+                />
+              </LayerManager>
+            </>
+          );
+        }}
+      </Map>
     </div>
   );
 };
 
-export const Paths01 = Template.bind({});
-Paths01.args = {
+export const Mapbox = Template.bind({});
+Mapbox.args = {
   id: 'paths',
   className: '',
   viewport: {},
   initialViewState: {
-    bounds: [-3.757152, 40.348085, -3.727669, 40.360578],
+    bounds: [-3.769487, 40.345295, -3.710521, 40.370279],
     fitBoundsOptions: {
       padding: -50,
     },
