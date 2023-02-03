@@ -24,9 +24,9 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
   const colorToRGBArray = (process) => {
     if (process === 'energy') {
-      return [0, 147, 146];
+      return [255, 147, 146];
     } else if (process === 'water') {
-      return [57, 177, 133];
+      return [0, 255, 255];
     } else if (process === 'material') {
       return [156, 203, 134];
     } else {
@@ -46,8 +46,8 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         filled: true,
         radiusScale: 6,
         radiusMinPixels: 1,
-        radiusMaxPixels: 100,
-        lineWidthMinPixels: 1,
+        radiusMaxPixels: 10,
+        lineWidthMinPixels: 0.5,
         getPosition: (d) => d.geometry.coordinates[0],
         getRadius: () => 5,
         getFillColor: () => [255, 140, 0],
@@ -66,7 +66,7 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         widthMinPixels: 2,
         getPath: (d) => d.geometry.coordinates,
         getColor: (d) => colorToRGBArray(d.properties.process),
-        getWidth: () => 1,
+        getWidth: () => 0.4,
       }),
     ];
   }, []);
@@ -88,12 +88,12 @@ export const DeckGLBasemap = Template.bind({});
 DeckGLBasemap.args = {
   id: 'paths-deckgl-map',
   initialViewState: {
-    longitude: -3.742829,
-    latitude: 40.356263,
-    zoom: 14,
-    maxZoom: 16,
-    pitch: 0,
     bearing: 0,
+    latitude: 40.35535765713118,
+    longitude: -3.743920171563559,
+    padding: { top: 0, bottom: 0, left: 0, right: 0 },
+    pitch: 0,
+    zoom: 15.953620076646475,
   },
   mapStyle: 'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json',
 };

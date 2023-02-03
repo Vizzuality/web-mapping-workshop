@@ -27,9 +27,9 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
   const colorToRGBArray = (process) => {
     if (process === 'energy') {
-      return [0, 147, 146];
+      return [255, 147, 146];
     } else if (process === 'water') {
-      return [57, 177, 133];
+      return [0, 255, 255];
     } else if (process === 'material') {
       return [156, 203, 134];
     } else {
@@ -121,10 +121,12 @@ Mapbox.args = {
   className: '',
   viewport: {},
   initialViewState: {
-    bounds: [-3.769487, 40.345295, -3.710521, 40.370279],
-    fitBoundsOptions: {
-      padding: -50,
-    },
+    bearing: 0,
+    latitude: 40.35535765713118,
+    longitude: -3.743920171563559,
+    padding: { top: 0, bottom: 0, left: 0, right: 0 },
+    pitch: 0,
+    zoom: 15.953620076646475,
   },
   onMapViewportChange: (viewport) => {
     console.info('onMapViewportChange: ', viewport);
