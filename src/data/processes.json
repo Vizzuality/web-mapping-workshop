@@ -1,0 +1,157 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "w4704750",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.744458, 40.353408],
+          [-3.748033, 40.355466]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "The Reuse Company",
+        "company2": "Otis",
+        "process": "water",
+        "quantity": 300
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704751",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.744458, 40.353408],
+          [-3.748033, 40.355466]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "The Reuse Company",
+        "company2": "Otis",
+        "process": "energy",
+        "quantity": 400
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704752",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.744458, 40.353408],
+          [-3.744074, 40.354755]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "The Reuse Company",
+        "company2": "Impact Lab",
+        "process": "energy",
+        "quantity": 800
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704754",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.744074, 40.354755],
+          [-3.742482, 40.355672]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "Impact Lab",
+        "company2": "Solusoft",
+        "process": "material",
+        "quantity": 1200
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704756",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.742482, 40.355672
+          ],
+          [-3.744012, 40.357657]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "Solusoft",
+        "company2": "Bidafarma",
+        "process": "water",
+        "quantity": 720
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704756",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.742482, 40.355672
+          ],
+          [-3.744012, 40.357657]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "Solusoft",
+        "company2": "Bidafarma",
+        "process": "energy",
+        "quantity": 720
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704756",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.7425985020, 40.35567269
+          ],
+          [-3.74411897, 40.35765779]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "Solusoft",
+        "company2": "Bidafarma",
+        "process": "water",
+        "quantity": 720
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "w4704756",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -3.742349, 40.355672
+          ],
+          [-3.743874, 40.357657]
+        ]
+      },
+      "properties": {
+        "timestamp": 1603801704,
+        "company1": "Solusoft",
+        "company2": "Bidafarma",
+        "process": "material",
+        "quantity": 720
+      }
+    }
+  ]
+}
