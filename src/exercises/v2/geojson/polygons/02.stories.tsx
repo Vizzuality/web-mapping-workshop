@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useMemo } from 'react';
 
-import type { MapRef, ViewState } from 'react-map-gl';
+import { ViewState } from 'react-map-gl';
 
 import { Story } from '@storybook/react/types-6-0';
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
@@ -15,67 +15,63 @@ import data from 'data/provinces.json';
 
 const StoryMap = {
   title: 'Exercises/Geojson/Polygons',
+  component: Map,
   argTypes: {},
 };
 
 export default StoryMap;
 
 const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
-  const mapRef = useRef<MapRef>(null);
-
   const { id, bounds, initialViewState } = args;
-  const [viewState, setViewState] = useState<Partial<ViewState>>();
 
+  const [viewState, setViewState] = useState<Partial<ViewState>>();
+  const populationValues = useMemo(
+    () => data.features.map(({ properties: { population } }) => population),
+    []
+  );
+
+  const maxValue = Math.max(...populationValues);
+  const minValue = Math.min(...populationValues);
   const LAYER = {
-    id: 'spain-ccaa-hover',
+    id: 'spain-ccaa',
     type: 'vector',
     source: {
       data,
       type: 'geojson',
-      promoteId: 'cartodb_id',
     },
     render: {
       layers: [
         {
+          id: 'province-area',
           type: 'fill',
           paint: {
             'fill-color': [
-              'case',
-              ['>', ['get', 'population'], 2000000],
-              '#1C5183',
-              ['all', ['>=', ['get', 'population'], 2], ['<', ['get', 'population'], 300000]],
-              '#6D7789',
-              '#E7B092',
+              'interpolate',
+              ['linear'],
+              ['get', 'population'],
+              minValue || 0,
+              '#00ffcc',
+              maxValue,
+              '#004aFF',
             ],
+            'fill-opacity': 0.5,
           },
         },
         {
+          id: 'province-boundary',
           type: 'line',
           paint: {
-            'line-color': [
-              'case',
-              ['>', ['get', 'population'], 2000000],
-              '#E7B092',
-              ['all', ['>=', ['get', 'population'], 2], ['<', ['get', 'population'], 300000]],
-              '#1C5183',
-              '#6D7789',
-            ],
-            'line-width': 0.8,
-            'line-opacity': 0.5,
+            'line-color': '#000000',
+            'line-opacity': 1,
           },
         },
       ],
     },
   };
-
-  const handleMapLoad = ({ map }) => {
-    mapRef.current = map;
-  };
-
   return (
     <>
       <div className="prose">
-        <h2>Geojson: Polygons 05</h2>
+        <h2>Geojson: Polygons 02</h2>
         <p>
           With this{' '}
           <a
@@ -85,26 +81,17 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
           >
             Geojson
           </a>
-          , we want to show the provinces of Spain. We want to color each province conditionally
-          based on a numeric attribute .{' '}
-          <i>Note: This map is for learning purposes, data may not be accurate with reality</i>
+          , we want to show the provinces of Spain. We want to show the area of each province with a
+          color based on population and the boundary of each province with a black line.
         </p>
+
         <Code>
-          {`
-          color = '#1C5183', // for population over 2000000
-          color = '#6D7789', // for population between 2 and 300000
-          color = '#E7B092', // for the rest of the cases
-
-          border = '#E7B092', // for population over 2000000
-          border = '#1C5183', // for population between 2 and 300000
-          border = '#6D7789', // for the rest of the cases
-
-          opacity = 0.5, // border opacity
-          width = 0.8 // border width
-        `}
+          {`bounds = [-13.392736, 35.469583, 7.701014, 43.460862];
+colorRamp = ['#00ffcc', '#004aFF'];
+border = '#000000';
+opacity = 0.5;`}
         </Code>
       </div>
-
       <Map
         id={id}
         bounds={bounds}
@@ -114,7 +101,6 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         onMapViewStateChange={(v) => {
           setViewState(v);
         }}
-        onMapLoad={handleMapLoad}
       >
         {(map) => {
           return (
@@ -133,8 +119,8 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   );
 };
 
-export const Polygons05 = Template.bind({});
-Polygons05.args = {
+export const Polygons02 = Template.bind({});
+Polygons02.args = {
   id: 'spain-provinces',
   className: '',
   viewport: {},
@@ -152,8 +138,5 @@ Polygons05.args = {
   },
   onMapLoad: ({ map, mapContainer }) => {
     console.info('onMapLoad: ', map, mapContainer);
-  },
-  onHover: ({ map, mapContainer }) => {
-    console.info('onHover: ', map, mapContainer);
   },
 };

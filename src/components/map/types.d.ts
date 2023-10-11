@@ -6,6 +6,8 @@ export type Bounds = {
   viewportOptions?: Partial<ViewState>;
 };
 
+export type Bbox = [number, number, number, number];
+
 export interface CustomMapProps extends MapProps {
   /** A function that returns the map instance */
   children?: (map: MapboxMap) => React.ReactNode;

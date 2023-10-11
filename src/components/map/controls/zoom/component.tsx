@@ -2,18 +2,19 @@ import { FC, useCallback, MouseEvent } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import cx from 'classnames';
-
 import Icon from 'components/icon';
+import { cn } from 'utils/cn';
 
 import ZOOM_IN_SVG from 'svgs/map/zoom-in.svg?sprite';
 import ZOOM_OUT_SVG from 'svgs/map/zoom-out.svg?sprite';
 
 import type { ZoomControlProps } from './types';
 
-export const ZoomControl: FC<ZoomControlProps> = ({ id, className }: ZoomControlProps) => {
-  const { [id]: mapRef } = useMap();
-
+export const ZoomControl: FC<ZoomControlProps> = ({
+  mapId = 'current',
+  className,
+}: ZoomControlProps) => {
+  const { [mapId]: mapRef } = useMap();
   const zoom = mapRef?.getZoom();
   const minZoom = mapRef?.getMinZoom();
   const maxZoom = mapRef?.getMaxZoom();
@@ -40,16 +41,16 @@ export const ZoomControl: FC<ZoomControlProps> = ({ id, className }: ZoomControl
 
   return (
     <div
-      className={cx({
+      className={cn({
         'inline-flex flex-col': true,
         [className]: !!className,
       })}
     >
       <button
-        className={cx({
-          'mb-0.5 p-0.5 rounded-t-3xl text-white bg-black': true,
+        className={cn({
+          'mb-0.5 rounded-t-3xl bg-black p-0.5 text-white disabled:cursor-default disabled:opacity-50':
+            true,
           'hover:bg-gray-700 active:bg-gray-600': zoom < maxZoom,
-          'opacity-50 cursor-default': zoom >= maxZoom,
         })}
         aria-label="Zoom in"
         type="button"
@@ -58,12 +59,11 @@ export const ZoomControl: FC<ZoomControlProps> = ({ id, className }: ZoomControl
       >
         <Icon icon={ZOOM_IN_SVG} />
       </button>
-
       <button
-        className={cx({
-          'p-0.5 rounded-b-3xl text-white bg-black': true,
+        className={cn({
+          'rounded-b-3xl bg-black p-0.5 text-white disabled:cursor-default disabled:opacity-50':
+            true,
           'hover:bg-gray-700 active:bg-gray-600': zoom > minZoom,
-          'opacity-50 cursor-default': zoom <= minZoom,
         })}
         aria-label="Zoom out"
         type="button"
