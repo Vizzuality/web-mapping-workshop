@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { TileLayer } from '@deck.gl/geo-layers';
 import { BitmapLayer } from '@deck.gl/layers';
@@ -13,10 +13,10 @@ import Map from 'components/map';
 import Controls from 'components/map/controls';
 import ZoomControl from 'components/map/controls/zoom';
 import { CustomMapProps } from 'components/map/types';
-import TestExtension from 'extensions/test';
+import HighlightExtension from 'extensions/highlight';
 
 const StoryMap = {
-  title: 'Exercises/DeckGL/Extensions',
+  title: 'Playground/DeckGL/Extensions',
   component: Map,
   argTypes: {},
 };
@@ -28,6 +28,11 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
 
   const [viewState, setViewState] = useState(initialViewState);
 
+  const [mouseLngLat, setMouseLngLat] = useState({
+    lng: 0,
+    lat: 0,
+  });
+
   const RASTER_DECODED_LAYER = useMemo(() => {
     return [
       new MapboxLayer({
@@ -37,8 +42,11 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         tileSize: 256,
         visible: true,
         opacity: 1,
+        // refinementStrategy: '',
+        uMouseLng: mouseLngLat.lng,
+        uMouseLat: mouseLngLat.lat,
         renderSubLayers: (sl) => {
-          const { id: subLayerId, data, tile, visible, opacity: o } = sl;
+          const { id: subLayerId, data, tile, visible, uMouseLng, uMouseLat, opacity: o } = sl;
 
           const {
             z,
@@ -59,7 +67,10 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
               zoom: z,
               visible,
               opacity: o,
-              extensions: [new TestExtension()],
+              uMouseLng,
+              uMouseLat,
+              uRadius: 50000,
+              extensions: [new HighlightExtension()],
             });
           }
           return null;
@@ -68,25 +79,27 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         maxZoom: 12,
       }),
     ];
+  }, [mouseLngLat]);
+
+  const handleMouseMove = useCallback((e) => {
+    if (e.lngLat) {
+      setMouseLngLat(e.lngLat);
+    }
   }, []);
 
   return (
     <>
-      <div className="prose">
-        <h2>Raster tiles</h2>
-        <p>Draw a raster layer with this url source: </p>
-        <pre>{`https://earthengine.google.org/static/hansen_2013/gain_alpha/{z}/{x}/{y}.png`}</pre>
-      </div>
-
       <div className="relative grow">
         <Map
           id={id}
           bounds={bounds}
+          initialViewState={initialViewState}
           viewState={viewState}
           mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
           onMapViewStateChange={(v) => {
             setViewState(v);
           }}
+          onMouseMove={handleMouseMove}
         >
           {(map) => {
             return (
@@ -106,12 +119,17 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   );
 };
 
-export const Extensions01 = Template.bind({});
-Extensions01.args = {
+export const HighlightRaster = Template.bind({});
+HighlightRaster.args = {
   id: 'raster',
   className: '',
   viewport: {},
-  initialViewState: {},
+  initialViewState: {
+    bounds: [-13.392736, 35.469583, 7.701014, 43.460862],
+    fitBoundsOptions: {
+      padding: 50,
+    },
+  },
   onMapViewportChange: (viewport) => {
     console.info('onMapViewportChange: ', viewport);
   },

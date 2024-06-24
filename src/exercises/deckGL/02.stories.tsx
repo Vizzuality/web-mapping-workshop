@@ -22,6 +22,7 @@ import Legend from 'components/map/legend';
 import LegendItem from 'components/map/legend/item/component';
 import LegendTypeGradient from 'components/map/legend/types/gradient';
 import { CustomMapProps } from 'components/map/types';
+import BIIExtension from 'extensions/bii';
 import { BREAKPOINTS } from 'styles/styles.config';
 
 import PAUSE_SVG from 'svgs/ui/pause.svg?sprite';
@@ -207,6 +208,9 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
               zoom: z,
               visible,
               opacity,
+              uMinColor: [0.37, 0.55, 0.36],
+              uMaxColor: [0.88, 0.94, 0.88],
+              extensions: [new BIIExtension()],
             });
           }
           return null;
