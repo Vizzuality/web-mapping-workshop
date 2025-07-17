@@ -1,6 +1,6 @@
 {
-  "name": "front-end-scaffold",
-  "version": "0.3.0",
+  "name": "@vizzuality/web-mapping-workshop",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
     "check-types": "tsc --noemit -p tsconfig.json",
@@ -11,7 +11,7 @@
     "postinstall": "husky install"
   },
   "engines": {
-    "node": "~16.14 || ~14"
+    "node": "~22"
   },
   "dependencies": {
     "@artsy/fresnel": "3.5.0",
